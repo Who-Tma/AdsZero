@@ -203,6 +203,8 @@
     padding:10px 12px;color:var(--text);font-family:'Space Grotesk';font-size:12px}
 
   .dur-hint{font-size:10.5px;color:var(--text-dim);font-family:'Space Grotesk';margin:-4px 2px 14px;opacity:.8}
+  .dur-hint.ok{color:#4ADE80;opacity:1}
+  .dur-hint.bad{color:#FF6B6B;opacity:1}
 
   .summary-box{background:rgba(51,240,255,.04);border:1px solid rgba(51,240,255,.18);border-radius:12px;
     padding:12px 14px;margin-bottom:14px}
@@ -483,6 +485,7 @@
         <div class="ref-input" style="margin-bottom:10px"><input id="nameInput" placeholder="مثلاً کانال بازار طلا" maxlength="40"></div>
         <div class="dur-label">لینک: <span class="link-hint" id="linkHintLabel"></span></div>
         <div class="ref-input"><input id="linkInput" placeholder="t.me/yourchannel"></div>
+        <div class="dur-hint" id="linkCheckStatus" style="display:none;margin-top:-6px"></div>
 
         <div id="durationSection">
           <div class="dur-label">مدت ماندگاری موردنیاز:</div>
@@ -516,7 +519,7 @@
           <button class="suggest-btn" id="suggestBtn">پیشنهاد</button>
         </div>
 
-        <button class="submit-btn">ثبت سفارش</button>
+        <button class="submit-btn" id="submitOrderBtn">بررسی لینک</button>
       </div>
 
       <div class="ref-card soon-card" id="videoComingSoon" style="display:none">
@@ -1234,6 +1237,7 @@
     nameInputEl.placeholder=typeCopy[type].nph;
     linkInputEl.placeholder=typeCopy[type].ph;
     document.getElementById('linkHintLabel').textContent=typeCopy[type].linkHint;
+    if(typeof resetLinkVerification==='function') resetLinkVerification();
 
     const durationSection=document.getElementById('durationSection');
     if(type==='bot'){
@@ -1352,14 +1356,52 @@
     return name.length>10 ? name.slice(0,10)+'…' : name;
   }
 
-  document.querySelector('.submit-btn').addEventListener('click', async ()=>{
+  let linkVerified=null; // {title, type} once the link is confirmed real, null otherwise
+  const submitOrderBtn=document.getElementById('submitOrderBtn');
+  const linkCheckStatus=document.getElementById('linkCheckStatus');
+
+  function resetLinkVerification(){
+    linkVerified=null;
+    submitOrderBtn.textContent='بررسی لینک';
+    submitOrderBtn.classList.remove('send-mode');
+    linkCheckStatus.style.display='none';
+  }
+  linkInputEl.addEventListener('input', resetLinkVerification);
+
+  submitOrderBtn.addEventListener('click', async ()=>{
+    const link=linkInputEl.value.trim();
+    if(!link){ showToast('اول لینکش رو وارد کن'); return; }
+
+    // ----- stage 1: verify the link is a real, resolvable Telegram entity -----
+    if(!linkVerified){
+      submitOrderBtn.disabled=true;
+      submitOrderBtn.textContent='در حال بررسی…';
+      const { data, error } = await sb.functions.invoke('check-link', { body:{ link } });
+      submitOrderBtn.disabled=false;
+
+      if(error || !data?.valid){
+        submitOrderBtn.textContent='بررسی لینک';
+        linkCheckStatus.style.display='block';
+        linkCheckStatus.className='dur-hint bad';
+        linkCheckStatus.textContent='این لینک پیدا نشد — لینک عمومی و درست رو وارد کن (برای کانال/گروه خصوصی، بات باید عضوش باشه)';
+        return;
+      }
+
+      linkVerified=data;
+      linkCheckStatus.style.display='block';
+      linkCheckStatus.className='dur-hint ok';
+      linkCheckStatus.textContent=`✓ لینک تأیید شد: ${data.title}`;
+      submitOrderBtn.textContent='ثبت سفارش';
+      submitOrderBtn.classList.add('send-mode');
+      return;
+    }
+
+    // ----- stage 2: actually submit the order -----
     const qty=parseInt(qtyInput.value), unit=parseInt(priceInput.value);
     const name=nameInputEl.value.trim();
-    const link=linkInputEl.value.trim();
 
     if(!currentUser?.id){ showToast('اول باید وارد بشی'); return; }
     if(!name){ showToast('اول اسمش رو وارد کن'); return; }
-    if(!link){ showToast('حالا لینکش رو وارد کن'); return; }
     if(!qty || qty<=0){ showToast('تعداد کاربر رو وارد کن'); return; }
     if(!unit || unit<=0){ showToast('قیمت هر واحد رو وارد کن'); return; }
     if(selectedType==='bot'){
@@ -1374,8 +1416,7 @@
     const total=subtotal-orderDiscountAmount;
     if(total>balance){ showToast('موجودی برای این سفارش کافی نیست'); return; }
 
-    const submitBtn=document.querySelector('.submit-btn');
-    submitBtn.disabled=true;
+    submitOrderBtn.disabled=true;
 
     const { data, error } = await sb.rpc('create_order', {
       p_owner_id: currentUser.id,
@@ -1387,7 +1428,7 @@
       p_duration_hours: selectedType==='bot' ? null : parseInt(selectedDur),
       p_instant_pay: selectedType==='bot',
     });
-    submitBtn.disabled=false;
+    submitOrderBtn.disabled=false;
 
     if(error){
       showToast(error.message?.includes('insufficient') ? 'موجودی برای این سفارش کافی نیست' : ('خطا: '+error.message));
@@ -1400,6 +1441,7 @@
 
     showToast(`سفارش برای ${fmt(qty)} کاربر ثبت شد ✓`);
     nameInputEl.value=''; linkInputEl.value=''; qtyInput.value=''; priceInput.value='';
+    resetLinkVerification();
     refreshSummary();
   });
 
