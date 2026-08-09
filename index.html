@@ -761,6 +761,46 @@
   // Called at the very bottom of this script (after balance/userLevel/render
   // functions all exist) — sends the raw signed initData to the Edge Function,
   // which verifies it server-side and returns the user's real row.
+  async function loadTasks(){
+    if(!currentUser?.id) return;
+    const { data, error } = await sb.rpc('get_my_tasks', { p_user_id: currentUser.id });
+    if(error){ showToast('خطا در گرفتن چالش‌ها'); return; }
+    tasks.length=0;
+    (data||[]).forEach(row=>{
+      tasks.push({
+        id: row.order_id,
+        icon: row.ad_type==='channel' ? '📢' : '🤖',
+        title: (row.ad_type==='channel' ? 'عضویت در ' : 'امتحان ') + truncateName(row.name),
+        reward: row.unit_price,
+        dur: row.duration_hours,
+        instantPay: row.instant_pay,
+        cat: row.ad_type,
+        state: row.my_state,
+        boostedTotal: row.reward_total,
+        instantPaid: row.instant_paid,
+        ownerHasBlueTick: row.owner_has_blue_tick,
+        ownerHasPurpleTick: row.owner_has_purple_tick,
+      });
+    });
+    renderTasks();
+    updateTopPill();
+  }
+
+  async function loadMyOrders(){
+    if(!currentUser?.id) return;
+    const { data, error } = await sb.rpc('get_my_orders', { p_user_id: currentUser.id });
+    if(error){ showToast('خطا در گرفتن لینک‌های ثبت‌شده'); return; }
+    myOrders.length=0;
+    (data||[]).forEach(row=>{
+      myOrders.push({
+        id: row.id, name: row.name, link: row.link, type: row.ad_type,
+        dur: row.duration_hours, unit: row.unit_price, qty: row.qty,
+        filled: row.filled, pending: row.pending, completed: row.completed,
+      });
+    });
+    renderMyLinks();
+  }
+
   async function loginWithTelegram(){
     if(!tg || !tg.initData){
       showToast('این اپ فقط داخل تلگرام درست کار می‌کنه');
@@ -783,8 +823,8 @@
       hasPurpleTick = u.has_purple_tick;
       updateBalanceUI(false);
       updateLevelUI();
-      renderTasks();
-      renderMyLinks();
+      await loadTasks();
+      await loadMyOrders();
     } catch(e){
       showToast('اتصال به سرور برقرار نشد');
     }
@@ -809,18 +849,12 @@
     if(!langSwitch.contains(e.target)) langDropdown.classList.remove('show');
   });
 
-  // ===== task data =====
-  // TODO: populate this from Supabase (public.orders / order_completions) instead of a local array
+  // ===== task data (fetched from Supabase — see loadTasks() near the bottom) =====
   const tasks=[];
   // state: 'todo' | 'opened' (button shows chek) | 'pending' (waiting the duration) | 'done'
-  tasks.forEach(t=>t.state='todo');
+  const myOrders=[]; // fetched via loadMyOrders() — the advertiser's own registered ads
 
-  let nextTaskId = tasks.length+1;
-  let nextOrderId = 1;
-  const myOrders=[]; // {id, taskId, link, type, dur, unit, qty, filled, pending, completed}
-
-  // TODO: replace with the real balance fetched for the logged-in user
-  let balance=0;
+  let balance=0; // set for real once login + loadTasks/loadMyOrders complete
   const COIN_PER_USD=50000, MIN_USD=10;
   const listEl=document.getElementById('list'), balEl=document.getElementById('balance');
   const usdVal=document.getElementById('usdVal'), walletUsd=document.getElementById('walletUsd');
@@ -843,18 +877,18 @@
   }
 
   // ===== level system =====
-  // demo referral count — wire this up to your real referral tracking later
   let referralCount=0;
   const GOLDEN_REQ=3;
   let userLevel='simple'; // 'simple' | 'golden' | 'premium'
 
   // verification ticks shown next to a user's registered channel/bot names — from store purchases
-  let hasBlueTick=false, hasPurpleTick=false; // demo flags — persist per-user server-side in production
-  function nameBadgeHtml(){
-    if(hasPurpleTick) return `<span class="name-tick purple" title="پرمیوم">✓</span>`;
-    if(hasBlueTick) return `<span class="name-tick blue" title="استارتر پک">✓</span>`;
+  let hasBlueTick=false, hasPurpleTick=false;
+  function tickBadgeHtml(blue, purple){
+    if(purple) return `<span class="name-tick purple" title="پرمیوم">✓</span>`;
+    if(blue) return `<span class="name-tick blue" title="استارتر پک">✓</span>`;
     return '';
   }
+  function nameBadgeHtml(){ return tickBadgeHtml(hasBlueTick, hasPurpleTick); } // for the user's own listings
 
   const levelIcon=document.getElementById('levelIcon');
   const levelStripFill=document.getElementById('levelStripFill');
@@ -911,6 +945,12 @@
     if(bump){ balEl.classList.remove('bump'); void balEl.offsetWidth; balEl.classList.add('bump'); }
   }
 
+  async function refreshBalance(){
+    if(!currentUser?.id) return;
+    const { data } = await sb.rpc('get_balance', { p_user_id: currentUser.id });
+    if(typeof data==='number'){ balance=data; updateBalanceUI(true); }
+  }
+
   let activeCategory='all';
   const catChips=document.querySelectorAll('.cat-chip'), taskCountLabel=document.getElementById('taskCountLabel');
   catChips.forEach(chip=>{
@@ -956,7 +996,7 @@
         btnHtml=`<button class="btn chek" data-id="${t.id}" data-action="chek">Chek</button>`;
       } else if(t.state==='pending'){
         btnHtml=`<button class="btn wait">در انتظار</button>`;
-        noteHtml=`<div class="pending-note" id="timer${t.id}">باقیمانده تا پرداخت کامل…</div>`;
+        noteHtml=`<div class="pending-note">در انتظار پرداخت کامل — بعد از اتمام ${t.dur} ساعت</div>`;
       } else {
         btnHtml=`<button class="btn done">✓</button>`;
       }
@@ -976,7 +1016,7 @@
 
       el.innerHTML=`<div class="icon">${t.icon}</div>
         <div class="body">
-          <div class="ttl">${t.title}${t.orderId ? nameBadgeHtml() : ''}</div>
+          <div class="ttl">${t.title}${tickBadgeHtml(t.ownerHasBlueTick, t.ownerHasPurpleTick)}</div>
           <div class="meta-row">
             <span class="rw">${rewardLabel}</span>
             ${badgeHtml}
@@ -1016,85 +1056,41 @@
       {duration:550,easing:'ease-in'}).onfinish=()=>c.remove();
   }
 
-  function onTaskAction(e){
+  async function onTaskAction(e){
     const id=+e.currentTarget.dataset.id, action=e.currentTarget.dataset.action, t=tasks.find(x=>x.id===id);
+    if(!currentUser?.id){ showToast('اول باید وارد بشی'); return; }
+    const btn=e.currentTarget;
+    btn.disabled=true;
 
     if(action==='open'){
-      // simulates the user leaving to do the task (join channel / try bot) then coming back
+      const { data, error } = await sb.rpc('open_task', { p_order_id:id, p_user_id: currentUser.id });
+      btn.disabled=false;
+      if(error){ showToast('خطا در شروع چالش'); return; }
       t.state='opened';
-      if(t.orderId){
-        const order=myOrders.find(o=>o.id===t.orderId);
-        if(order && !t.countedFilled){ order.filled=Math.min(order.qty,order.filled+1); t.countedFilled=true; renderMyLinks(); }
-      }
+      t.boostedTotal=data.reward_total;
       renderTasks();
       return;
     }
 
     if(action==='chek'){
-      const boosted=boostedReward(t.reward);
+      const { data, error } = await sb.rpc('claim_task', { p_order_id:id, p_user_id: currentUser.id });
+      btn.disabled=false;
+      if(error){ showToast('خطا در دریافت پاداش'); return; }
 
-      if(t.instantPay){
-        // no persistence check possible (referral links) — pay the full amount right away
-        t.boostedTotal=boosted;
-        t.state='done';
-        if(t.orderId){
-          const order=myOrders.find(o=>o.id===t.orderId);
-          if(order){ order.completed=Math.min(order.qty,order.completed+1); renderMyLinks(); }
-        }
-        renderTasks();
-        const btn=document.querySelector(`#t${id} .btn`);
-        if(btn) flyCoin(btn);
-        balance+=boosted;
-        updateBalanceUI(true);
-        updateTopPill();
-        showToast(`◈ ${fmt(boosted)} کوین واریز شد ✓`);
-        return;
-      }
-
-      const instant=Math.round(boosted/3);
-      t.boostedTotal=boosted; t.instantPaid=instant;
-      t.state='pending';
-      if(t.orderId){
-        const order=myOrders.find(o=>o.id===t.orderId);
-        if(order){ order.pending=Math.min(order.qty,order.pending+1); renderMyLinks(); }
-      }
+      t.state=data.state; // 'done' (instant-pay) or 'pending' (waiting the duration)
+      t.boostedTotal=data.reward_total;
+      t.instantPaid=data.instant_paid;
       renderTasks();
-
-      const btn=document.querySelector(`#t${id} .btn`);
-      flyCoin(btn);
-      balance+=instant;
-      updateBalanceUI(true);
       updateTopPill();
-      showToast(`◈ ${fmt(instant)} فوری واریز شد — بقیه بعد از ${t.dur} ساعت`);
 
-      // demo-accelerated countdown so you can see the final payout land
-      let remaining=t.demoSeconds;
-      const timerEl=()=>document.getElementById('timer'+id);
-      const iv=setInterval(()=>{
-        remaining--;
-        const el=timerEl();
-        if(el) el.textContent=`باقیمانده تا پرداخت کامل… ${remaining}s (دمو)`;
-        if(remaining<=0){
-          clearInterval(iv);
-          const rest=t.boostedTotal-t.instantPaid;
-          t.state='done';
-          if(t.orderId){
-            const order=myOrders.find(o=>o.id===t.orderId);
-            if(order){
-              order.pending=Math.max(0,order.pending-1);
-              order.completed=Math.min(order.qty,order.completed+1);
-              renderMyLinks();
-            }
-          }
-          renderTasks();
-          const doneBtn=document.querySelector(`#t${id} .btn`);
-          if(doneBtn) flyCoin(doneBtn);
-          balance+=rest;
-          updateBalanceUI(true);
-          updateTopPill();
-          showToast(`◈ باقی‌مانده (${fmt(rest)}) هم واریز شد ✓`);
-        }
-      },1000);
+      const rewardBtn=document.querySelector(`#t${id} .btn`);
+      if(rewardBtn) flyCoin(rewardBtn);
+      balance+=data.instant_paid;
+      updateBalanceUI(true);
+
+      showToast(t.instantPay
+        ? `◈ ${fmt(data.instant_paid)} کوین واریز شد ✓`
+        : `◈ ${fmt(data.instant_paid)} فوری واریز شد — بقیه بعد از ${t.dur} ساعت`);
     }
   }
 
@@ -1165,24 +1161,30 @@
     }
   });
 
-  applyBoost.addEventListener('click',()=>{
+  applyBoost.addEventListener('click', async ()=>{
     const order=myOrders.find(o=>o.id===activeOrderId);
     if(!order) return;
     const amount=parseInt(boostInput.value)||0;
     const extraUnits=Math.floor(amount/order.unit);
     if(extraUnits<=0){ showToast('یه مبلغ معتبر وارد کن'); return; }
-    const discountPct=LEVEL_ORDER_DISCOUNT[userLevel];
-    const subtotal=extraUnits*order.unit;
-    const discountAmount=Math.round(subtotal*discountPct/100);
-    const cost=subtotal-discountAmount;
-    if(cost>balance){ showToast('موجودی کافی نیست'); return; }
-    balance-=cost;
-    order.qty+=extraUnits;
-    updateBalanceUI(true);
+
+    applyBoost.disabled=true;
+    const { data, error } = await sb.rpc('boost_order', {
+      p_order_id: order.id, p_user_id: currentUser.id, p_amount: amount
+    });
+    applyBoost.disabled=false;
+
+    if(error){
+      showToast(error.message?.includes('insufficient') ? 'موجودی کافی نیست' : ('خطا: '+error.message));
+      return;
+    }
+    const addedQty = data.qty - order.qty;
+    order.qty = data.qty;
+    await refreshBalance();
     refreshOrderModal();
     renderMyLinks();
     boostInput.value='';
-    showToast(`◈ بودجه افزایش یافت: +${fmt(extraUnits)} واحد`);
+    showToast(`◈ بودجه افزایش یافت: +${fmt(addedQty)} واحد`);
   });
 
   showUsersBtn.addEventListener('click',()=>{
@@ -1342,11 +1344,12 @@
     return name.length>10 ? name.slice(0,10)+'…' : name;
   }
 
-  document.querySelector('.submit-btn').addEventListener('click',()=>{
+  document.querySelector('.submit-btn').addEventListener('click', async ()=>{
     const qty=parseInt(qtyInput.value), unit=parseInt(priceInput.value);
     const name=nameInputEl.value.trim();
     const link=linkInputEl.value.trim();
 
+    if(!currentUser?.id){ showToast('اول باید وارد بشی'); return; }
     if(!name){ showToast('اول اسمش رو وارد کن'); return; }
     if(!link){ showToast('حالا لینکش رو وارد کن'); return; }
     if(!qty || qty<=0){ showToast('تعداد کاربر رو وارد کن'); return; }
@@ -1363,40 +1366,31 @@
     const total=subtotal-orderDiscountAmount;
     if(total>balance){ showToast('موجودی برای این سفارش کافی نیست'); return; }
 
-    // deduct cost from balance — same discounted total shown in summaryBox
-    balance-=total;
-    updateBalanceUI(true);
+    const submitBtn=document.querySelector('.submit-btn');
+    submitBtn.disabled=true;
 
-    // create the order record — keep the full name for "my links", but tasks show a truncated version
-    const orderId=nextOrderId++;
-    const orderDur = selectedType==='bot' ? null : selectedDur;
-    const order={id:orderId, name, link, type:selectedType, dur:orderDur, unit, qty, filled:0, pending:0, completed:0};
-    myOrders.push(order);
-    renderMyLinks();
+    const { data, error } = await sb.rpc('create_order', {
+      p_owner_id: currentUser.id,
+      p_name: name,
+      p_link: link,
+      p_ad_type: selectedType,
+      p_unit_price: unit,
+      p_qty: qty,
+      p_duration_hours: selectedType==='bot' ? null : parseInt(selectedDur),
+      p_instant_pay: selectedType==='bot',
+    });
+    submitBtn.disabled=false;
 
-    // add ONE matching task to the task list — reward === unit price you set, so the price you see
-    // in "چالش‌ها" is always exactly what you configured here, never a different number
-    const demoSecondsByDur={3:8,12:14,24:20};
-    const newTask={
-      id: nextTaskId++,
-      icon: selectedType==='channel' ? '📢' : '🤖',
-      title: (selectedType==='channel' ? 'عضویت در ' : 'امتحان ') + truncateName(name),
-      reward: unit,
-      cat: selectedType,
-      state: 'todo',
-      orderId
-    };
-    if(selectedType==='bot'){
-      // no persistence check possible for bot/referral links — reward pays out instantly, no waiting period
-      newTask.instantPay=true;
-    } else {
-      newTask.dur=parseInt(selectedDur);
-      newTask.demoSeconds=demoSecondsByDur[selectedDur] || 10;
+    if(error){
+      showToast(error.message?.includes('insufficient') ? 'موجودی برای این سفارش کافی نیست' : ('خطا: '+error.message));
+      return;
     }
-    tasks.push(newTask);
-    renderTasks();
 
-    showToast(`سفارش برای ${fmt(qty)} کاربر، جمعاً ${fmt(total)} کوین ثبت شد ✓`);
+    await refreshBalance();
+    await loadMyOrders();
+    // your own ads never show up in your own task list — that's expected
+
+    showToast(`سفارش برای ${fmt(qty)} کاربر ثبت شد ✓`);
     nameInputEl.value=''; linkInputEl.value=''; qtyInput.value=''; priceInput.value='';
     refreshSummary();
   });
@@ -1540,11 +1534,13 @@
     }
   }
 
-  adWatchBtn.addEventListener('click',()=>{
-    // Placeholder for a real rewarded-ad SDK call (e.g. Adsgram) — wire the actual show() call in here.
-    // For now we simulate the ad-view delay so the discount flow can be tested end-to-end.
+  adWatchBtn.addEventListener('click', async ()=>{
+    // TODO: this still only simulates watching an ad (no real rewarded-ad SDK like
+    // Adsgram wired up yet) — but "watched" now really persists via mark_ad_watched.
     adWatchBtn.disabled=true; adWatchBtn.textContent='در حال پخش…';
-    setTimeout(()=>{
+    setTimeout(async ()=>{
+      const { error } = await sb.rpc('mark_ad_watched', { p_user_id: currentUser.id });
+      if(error){ adWatchBtn.disabled=false; adWatchBtn.textContent='🎬 تماشا'; showToast('خطا — دوباره امتحان کن'); return; }
       adWatchedToday=true;
       refreshAdDiscountRow();
       refreshTransferSummary();
@@ -1574,54 +1570,76 @@
     });
   });
 
-  const DAILY_TRANSFER_LIMIT={ simple:1, golden:3, premium:Infinity };
-  let transfersToday=0; // demo counter — reset this daily server-side in production
-
-  transferBtn.addEventListener('click',()=>{
-    const limit=DAILY_TRANSFER_LIMIT[userLevel];
-    if(transfersToday>=limit){
-      showToast(`به سقف روزانه‌ی انتقال رسیدی (${limit} بار برای سطح ${levelLabels[userLevel]})`);
-      return;
-    }
+  transferBtn.addEventListener('click', async ()=>{
     resetTransferForm();
+    if(currentUser?.id){
+      const { data } = await sb.rpc('has_watched_ad_today', { p_user_id: currentUser.id });
+      adWatchedToday = !!data;
+      refreshAdDiscountRow();
+      refreshTransferSummary();
+    }
     transferModal.classList.add('show');
   });
   transferModalClose.addEventListener('click',()=>transferModal.classList.remove('show'));
   transferModal.addEventListener('click',(e)=>{ if(e.target===transferModal) transferModal.classList.remove('show'); });
 
-  // TODO: replace with a real Supabase lookup (SELECT username FROM users WHERE id = ... OR username = ...)
-
-  checkUserBtn.addEventListener('click',()=>{
+  checkUserBtn.addEventListener('click', async ()=>{
     if(checkUserBtn.classList.contains('send-mode')){
       executeTransfer();
       return;
     }
-    const id=recipientInput.value.trim().replace('@','');
+    const query=recipientInput.value.trim().replace('@','');
     const amount=parseInt(amountInput.value)||0;
-    if(!id){ showToast('آیدی گیرنده رو وارد کن'); return; }
+    if(!query){ showToast('آیدی گیرنده رو وارد کن'); return; }
     if(!amount||amount<=0){ showToast('مبلغ رو وارد کن'); return; }
     if(amount>balance){ showToast('موجودی کافی نیست'); return; }
 
     checkUserBtn.textContent='در حال بررسی…'; checkUserBtn.disabled=true;
-    setTimeout(()=>{
-      checkUserBtn.disabled=false;
-      // TODO: this always "finds" the id — once wired up, show a real not-found error when the lookup misses
-      const name = 'کاربر '+id;
-      recipientVerified={id, name};
-      tSumUser.textContent=name;
-      checkUserBtn.textContent='Send';
-      checkUserBtn.classList.add('send-mode');
-      refreshTransferSummary();
-      showToast('کاربر پیدا شد ✓');
-    },700);
+    const { data, error } = await sb.rpc('find_recipient', { p_query: query });
+    checkUserBtn.disabled=false;
+
+    const found = Array.isArray(data) ? data[0] : data;
+    if(error || !found){
+      checkUserBtn.textContent='Chek User';
+      showToast('کاربری با این آیدی پیدا نشد');
+      return;
+    }
+    if(found.id === currentUser.id){
+      checkUserBtn.textContent='Chek User';
+      showToast('نمی‌تونی به خودت انتقال بدی');
+      return;
+    }
+
+    const name = found.first_name || found.username || ('کاربر '+found.id);
+    recipientVerified={id: found.id, name};
+    tSumUser.textContent=name;
+    checkUserBtn.textContent='Send';
+    checkUserBtn.classList.add('send-mode');
+    refreshTransferSummary();
+    showToast('کاربر پیدا شد ✓');
   });
 
-  function executeTransfer(){
+  async function executeTransfer(){
     const amount=parseInt(amountInput.value)||0;
-    const feePct=currentFeePct();
-    const feeAmount=Math.round(amount*feePct/100);
-    const finalAmount=amount-feeAmount;
     if(amount>balance){ showToast('موجودی کافی نیست'); return; }
+
+    checkUserBtn.disabled=true;
+    const { data, error } = await sb.rpc('transfer_coins', {
+      p_sender_id: currentUser.id,
+      p_recipient_id: recipientVerified.id,
+      p_amount: amount,
+    });
+    checkUserBtn.disabled=false;
+
+    if(error){
+      const msg = error.message||'';
+      showToast(
+        msg.includes('insufficient') ? 'موجودی کافی نیست' :
+        msg.includes('daily transfer limit') ? 'به سقف روزانه‌ی انتقال رسیدی' :
+        'خطا: '+msg
+      );
+      return;
+    }
 
     // fly coins toward the recipient's name in the summary box
     const fromRect=checkUserBtn.getBoundingClientRect();
@@ -1637,16 +1655,14 @@
       ],{duration:600+Math.random()*300, easing:'ease-in', delay:i*50}).onfinish=()=>c.remove();
     }
 
-    balance-=amount;
-    updateBalanceUI(true);
-    transfersToday++;
+    await refreshBalance();
 
     const record={
-      id: nextTransferId++,
+      id: data.id,
       user: recipientVerified.name,
       recipientId: recipientVerified.id,
-      amount, feePct, feeAmount, finalAmount,
-      date: new Date().toISOString(),
+      amount: data.amount, feePct: data.fee_pct, feeAmount: data.fee_amount, finalAmount: data.final_amount,
+      date: data.created_at,
     };
     transferHistory.unshift(record);
     hasUnreadHistory=true;
@@ -1655,13 +1671,12 @@
 
     setTimeout(()=>{
       transferModal.classList.remove('show');
-      showToast(`◈ ${fmt(finalAmount)} کوین برای ${recipientVerified.name} ارسال شد ✓`);
+      showToast(`◈ ${fmt(data.final_amount)} کوین برای ${recipientVerified.name} ارسال شد ✓`);
     },500);
   }
 
   // ===== transfer history =====
   let transferHistory=[];
-  let nextTransferId=1;
   let hasUnreadHistory=false;
   const historyBtn=document.getElementById('historyBtn'), unreadDot=document.getElementById('unreadDot');
   const historyModal=document.getElementById('historyModal'), historyModalClose=document.getElementById('historyModalClose');
@@ -1726,6 +1741,8 @@
         const spinCard=document.getElementById('storeCardSpin');
         if(spinCard) spinCard.scrollIntoView({behavior:'smooth', block:'start'});
       }
+      if(tab.dataset.pane==='tasks') loadTasks();
+      if(tab.dataset.pane==='links') loadMyOrders();
     });
   });
   window.addEventListener('load',()=>moveIndicator(document.querySelector('.tab.active')));
@@ -1825,11 +1842,19 @@
   levelDetailModal.addEventListener('click',(e)=>{ if(e.target===levelDetailModal) levelDetailModal.classList.remove('show'); });
 
   function doInvite(){
-    // wire this to your bot's real deep-link parameter, e.g. https://t.me/YourBot?start=ref_<userId>
-    const link='https://t.me/YourBotName?start=ref_'+(currentUser?.id || '<USER_ID>');
-    navigator.clipboard?.writeText(link).catch(()=>{});
-    try{ window.open(link,'_blank'); }catch(err){}
-    showToast('لینک رفرال کپی شد — بفرست برای دوستات! 🥇');
+    const link='https://t.me/AdsZeroBot?start=ref_'+(currentUser?.id || '<USER_ID>');
+    let copied=false;
+    try{ navigator.clipboard?.writeText(link); copied=true; }catch(err){}
+
+    // window.open() is unreliable/blocked inside Telegram's in-app WebView —
+    // use Telegram's own API to open t.me links when available.
+    if(tg?.openTelegramLink){
+      tg.openTelegramLink(link);
+    } else {
+      try{ window.open(link,'_blank'); }catch(err){}
+    }
+
+    showToast(copied ? 'لینک رفرال کپی شد — بفرست برای دوستات! 🥇' : link);
   }
 
   // ===== store: package purchases (USD-priced, converted to TON/Stars at order time) =====
@@ -1876,16 +1901,42 @@
       </div>`).join('');
 
     container.querySelectorAll('.store-buy-btn[data-pkg]').forEach(btn=>{
-      btn.addEventListener('click',()=>{
+      btn.addEventListener('click', ()=>{
+        if(!currentUser?.id){ showToast('اول باید وارد بشی'); return; }
         const pkg=STORE_PACKAGES.find(p=>p.id===btn.dataset.pkg), method=btn.dataset.method;
+        btn.disabled=true;
         showToast(method==='TON' ? 'در حال اتصال به کیف‌پول TON…' : 'در حال باز شدن پرداخت با Stars…');
-        setTimeout(()=>{
-          if(pkg.premium){ userLevel='premium'; updateLevelUI(); }
-          if(pkg.coins>0){ balance+=pkg.coins; updateBalanceUI(true); }
-          if(pkg.badge==='blue') hasBlueTick=true;
-          if(pkg.badge==='purple') hasPurpleTick=true;
-          if(pkg.badge){ renderTasks(); renderMyLinks(); }
-          showToast(`◈ خرید با موفقیت انجام شد ✓`);
+
+        // TODO: this still only *simulates* the payment step (TON Connect / Telegram
+        // Payments isn't wired up yet) — but once "paid", it now really persists via
+        // purchase_package instead of just updating local state.
+        setTimeout(async ()=>{
+          const paidAmount = method==='TON'
+            ? Math.round((pkg.usd/PRICING.TON_USD_RATE)*100)/100
+            : Math.round(pkg.usd*PRICING.STARS_PER_USD);
+
+          const { data, error } = await sb.rpc('purchase_package', {
+            p_user_id: currentUser.id,
+            p_package_id: pkg.id,
+            p_payment_method: method,
+            p_paid_amount: paidAmount,
+            p_usd_price: pkg.usd,
+            p_coins: pkg.coins,
+            p_grants_premium: !!pkg.premium,
+            p_badge: pkg.badge || null,
+          });
+          btn.disabled=false;
+          if(error){ showToast('خطا: '+error.message); return; }
+
+          userLevel = data.level;
+          hasBlueTick = data.has_blue_tick;
+          hasPurpleTick = data.has_purple_tick;
+          balance = data.balance;
+          updateLevelUI();
+          updateBalanceUI(true);
+          await loadTasks();
+          renderMyLinks();
+          showToast('◈ خرید با موفقیت انجام شد ✓');
         },1200);
       });
     });
@@ -2017,30 +2068,4 @@
     }
   }
 
-  const spinModal=document.getElementById('spinModal'), spinModalClose=document.getElementById('spinModalClose');
-  const spinFreeBtn=document.getElementById('spinFreeBtn');
-  spinFreeBtn.addEventListener('click', async ()=>{
-    if(currentUser?.id){
-      const { data } = await sb.rpc('has_claimed_spin_today', { p_user_id: currentUser.id });
-      dailySpinClaimedToday = !!data;
-      refreshSpinDot();
-    }
-    renderSpinModal();
-    spinModal.classList.add('show');
-  });
-  spinModalClose.addEventListener('click',()=>spinModal.classList.remove('show'));
-  spinModal.addEventListener('click',(e)=>{ if(e.target===spinModal) spinModal.classList.remove('show'); });
-
-  refreshSpinDot();
-
-  renderTasks();
-  renderMyLinks();
-  updateBalanceUI(false);
-  updateLevelUI();
-
-  // Real login happens last — it will overwrite the placeholder state above
-  // (balance, level, ticks) with the user's actual row once verify-init responds.
-  loginWithTelegram();
-</script>
-</body>
-</html>
+  const spinModal=document.getElementById('sp
