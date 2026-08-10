@@ -2066,6 +2066,47 @@
       usd:1.49, coins:900000 },
   ];
 
+  // ===== خرید با Telegram Stars — فاکتور واقعی از بات می‌گیریم و با UI خودِ تلگرام باز می‌کنیم.
+  // شارژ سکه/پرمیوم توسط bot-webhook (بعد از دریافت successful_payment از تلگرام) انجام میشه،
+  // نه اینجا — پس بعد از پرداخت موفق فقط پروفایل رو دوباره می‌خونیم.
+  async function buyWithStars(pkg, btn){
+    showToast('در حال ساخت فاکتور…');
+    const { data, error } = await sb.functions.invoke('create-stars-invoice', {
+      body: { user_id: currentUser.id, package_id: pkg.id }
+    });
+    if(error || !data?.invoice_url){
+      btn.disabled=false;
+      showToast('خطا در ساخت فاکتور — دوباره امتحان کن');
+      return;
+    }
+
+    if(!tg?.openInvoice){
+      btn.disabled=false;
+      showToast('این قابلیت فقط داخل تلگرام کار می‌کنه');
+      return;
+    }
+
+    tg.openInvoice(data.invoice_url, async (status)=>{
+      if(status==='paid'){
+        showToast('در حال تأیید پرداخت…');
+        // یه لحظه صبر می‌کنیم تا bot-webhook فرصت پردازش successful_payment رو داشته باشه
+        await new Promise(r=>setTimeout(r,2000));
+        await loginWithTelegram(); // پروفایل (موجودی، سطح، تیک‌ها) رو کامل تازه می‌کنه
+        btn.disabled=false;
+        showToast('◈ خرید با موفقیت انجام شد ✓');
+      } else if(status==='cancelled'){
+        btn.disabled=false;
+        showToast('پرداخت لغو شد');
+      } else if(status==='failed'){
+        btn.disabled=false;
+        showToast('پرداخت ناموفق بود');
+      } else {
+        btn.disabled=false;
+        showToast('وضعیت پرداخت نامشخصه — موجودیت رو چک کن');
+      }
+    });
+  }
+
   function renderStorePackages(){
     const container=document.getElementById('storePackagesContainer');
     container.innerHTML = STORE_PACKAGES.map(pkg=>`
@@ -2092,59 +2133,42 @@
         const pkg=STORE_PACKAGES.find(p=>p.id===btn.dataset.pkg), method=btn.dataset.method;
         btn.disabled=true;
 
-        const paidAmount = method==='TON'
-          ? Math.round((pkg.usd/PRICING.TON_USD_RATE)*100)/100
-          : Math.round(pkg.usd*PRICING.STARS_PER_USD);
+        if(method==='Stars'){
+          buyWithStars(pkg, btn);
+          return;
+        }
+
+        const paidAmount = Math.round((pkg.usd/PRICING.TON_USD_RATE)*100)/100;
 
         (async ()=>{
           let verifiedBoc = null;
-          if(method==='TON'){
-            showToast('در حال اتصال به کیف‌پول TON…');
-            try{
-              const txResult = await sendTonPayment(paidAmount);
-              verifiedBoc = txResult.boc;
-            } catch(e){
-              btn.disabled=false;
-              showToast('پرداخت لغو شد یا انجام نشد');
-              return;
-            }
-          } else {
-            showToast('در حال باز شدن پرداخت با Stars…');
-            // TODO: Stars پرداخت واقعی نیاز به Telegram Payments API سمت بات داره — هنوز شبیه‌سازیه
-            await new Promise(r=>setTimeout(r,1200));
+          showToast('در حال اتصال به کیف‌پول TON…');
+          try{
+            const txResult = await sendTonPayment(paidAmount);
+            verifiedBoc = txResult.boc;
+          } catch(e){
+            btn.disabled=false;
+            showToast('پرداخت لغو شد یا انجام نشد');
+            return;
           }
 
-          let data, error;
-          if(method==='TON'){
-            // به‌جای صدا زدن مستقیم purchase_package، تراکنش رو می‌فرستیم سمت سرور تا
-            // خودش روی بلاکچین تأیید کنه و فقط بعد از تأیید واقعی سکه/پرمیوم بده.
-            showToast('در حال تأیید تراکنش روی بلاکچین…');
-            const res = await sb.functions.invoke('verify-ton-payment', {
-              body: { user_id: currentUser.id, package_id: pkg.id, boc: verifiedBoc }
-            });
-            data = res.data;
-            error = res.error || (res.data?.error ? { message: res.data.error } : null);
-            // res.error پیام عمومی «non-2xx status code» می‌ده که چیزی نشون نمی‌ده؛
-            // پیام واقعی خطا رو خود تابع توی بدنه‌ی JSON پاسخ برگردونده، از اونجا بخونش.
-            if(res.error && res.error.context){
-              try{
-                const body = await res.error.context.clone().json();
-                if(body?.error) error = { message: body.error };
-              } catch(parseErr){ /* بدنه JSON نبود، همون پیام عمومی می‌مونه */ }
-            }
-          } else {
-            const res = await sb.rpc('purchase_package', {
-              p_user_id: currentUser.id,
-              p_package_id: pkg.id,
-              p_payment_method: method,
-              p_paid_amount: paidAmount,
-              p_usd_price: pkg.usd,
-              p_coins: pkg.coins,
-              p_grants_premium: !!pkg.premium,
-              p_badge: pkg.badge || null,
-            });
-            data = res.data; error = res.error;
+          // به‌جای صدا زدن مستقیم purchase_package، تراکنش رو می‌فرستیم سمت سرور تا
+          // خودش روی بلاکچین تأیید کنه و فقط بعد از تأیید واقعی سکه/پرمیوم بده.
+          showToast('در حال تأیید تراکنش روی بلاکچین…');
+          const res = await sb.functions.invoke('verify-ton-payment', {
+            body: { user_id: currentUser.id, package_id: pkg.id, boc: verifiedBoc }
+          });
+          let data = res.data;
+          let error = res.error || (res.data?.error ? { message: res.data.error } : null);
+          // res.error پیام عمومی «non-2xx status code» می‌ده که چیزی نشون نمی‌ده؛
+          // پیام واقعی خطا رو خود تابع توی بدنه‌ی JSON پاسخ برگردونده، از اونجا بخونش.
+          if(res.error && res.error.context){
+            try{
+              const body = await res.error.context.clone().json();
+              if(body?.error) error = { message: body.error };
+            } catch(parseErr){ /* بدنه JSON نبود، همون پیام عمومی می‌مونه */ }
           }
+
           btn.disabled=false;
           if(error){ showToast('خطا: '+error.message); return; }
 
