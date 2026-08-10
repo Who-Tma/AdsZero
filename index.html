@@ -2122,7 +2122,16 @@
             const res = await sb.functions.invoke('verify-ton-payment', {
               body: { user_id: currentUser.id, package_id: pkg.id, boc: verifiedBoc }
             });
-            data = res.data; error = res.error || (res.data?.error ? { message: res.data.error } : null);
+            data = res.data;
+            error = res.error || (res.data?.error ? { message: res.data.error } : null);
+            // res.error پیام عمومی «non-2xx status code» می‌ده که چیزی نشون نمی‌ده؛
+            // پیام واقعی خطا رو خود تابع توی بدنه‌ی JSON پاسخ برگردونده، از اونجا بخونش.
+            if(res.error && res.error.context){
+              try{
+                const body = await res.error.context.clone().json();
+                if(body?.error) error = { message: body.error };
+              } catch(parseErr){ /* بدنه JSON نبود، همون پیام عمومی می‌مونه */ }
+            }
           } else {
             const res = await sb.rpc('purchase_package', {
               p_user_id: currentUser.id,
