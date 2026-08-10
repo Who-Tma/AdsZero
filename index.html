@@ -6,6 +6,7 @@
 <title>AdsZero — پرداخت مرحله‌ای</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="https://unpkg.com/@tonconnect/ui@2.0.5/dist/tonconnect-ui.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -1605,21 +1606,75 @@
     showToast('پیشنهاد روی فرم اعمال شد ✓');
   });
 
-  // ===== wallet: connect (header) =====
-  const connectWalletBtn=document.getElementById('connectWalletBtn');
-  let walletConnected=false;
-  connectWalletBtn.addEventListener('click',()=>{
-    if(walletConnected)return;
-    connectWalletBtn.innerHTML='<span class="cw-ic">👛</span>اتصال...';
-    setTimeout(()=>{
-      walletConnected=true;
-      connectWalletBtn.innerHTML='<span class="cw-ic">👛</span>متصل شد ✓';
-      connectWalletBtn.classList.add('connected');
-      showToast('کیف‌پول متصل شد');
-      // TODO: once the real on-chain balance source is wired up, set it here:
-      // document.getElementById('realWalletBalance').textContent = fetchedBalance;
-    },900);
+  // ===== wallet: connect (header) — real TonConnect =====
+  const MERCHANT_TON_ADDRESS = 'UQAjqWy-rzGMd533NdYQRTrsEaIDio5Vj01fabQMQaHFtB_f';
+
+  const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+    manifestUrl: 'https://who-tma.github.io/AdsZero/tonconnect-manifest.json',
+    buttonRootId: null
   });
+
+  const connectWalletBtn=document.getElementById('connectWalletBtn');
+  let walletConnected=false, connectedAddress=null;
+
+  function shortAddr(a){ return a.slice(0,4)+'…'+a.slice(-4); }
+
+  async function refreshRealTonBalance(address){
+    try{
+      const res = await fetch(`https://tonapi.io/v2/accounts/${address}`);
+      const data = await res.json();
+      const ton = (data.balance/1e9).toFixed(2);
+      document.getElementById('realWalletBalance').textContent = ton;
+    } catch(e){
+      document.getElementById('realWalletBalance').textContent = '—';
+    }
+  }
+
+  connectWalletBtn.addEventListener('click', ()=>{
+    if(walletConnected){
+      tonConnectUI.disconnect();
+      return;
+    }
+    tonConnectUI.openModal();
+  });
+
+  tonConnectUI.onStatusChange((wallet)=>{
+    if(wallet){
+      walletConnected = true;
+      connectedAddress = wallet.account.address;
+      const friendly = TON_CONNECT_UI.toUserFriendlyAddress
+        ? TON_CONNECT_UI.toUserFriendlyAddress(connectedAddress, false)
+        : connectedAddress;
+      connectWalletBtn.innerHTML = `<span class="cw-ic">👛</span>${shortAddr(friendly)}`;
+      connectWalletBtn.classList.add('connected');
+      showToast('کیف‌پول متصل شد ✓');
+      refreshRealTonBalance(friendly);
+    } else {
+      walletConnected = false;
+      connectedAddress = null;
+      connectWalletBtn.innerHTML = '<span class="cw-ic">👛</span>Connect Wallet';
+      connectWalletBtn.classList.remove('connected');
+      document.getElementById('realWalletBalance').textContent = '—';
+    }
+  });
+
+  async function sendTonPayment(amountTon){
+    if(!walletConnected){
+      tonConnectUI.openModal();
+      throw new Error('wallet-not-connected');
+    }
+    const nanoAmount = Math.round(amountTon * 1e9).toString();
+    const tx = {
+      validUntil: Math.floor(Date.now()/1000) + 300,
+      messages: [
+        {
+          address: MERCHANT_TON_ADDRESS,
+          amount: nanoAmount,
+        }
+      ]
+    };
+    return await tonConnectUI.sendTransaction(tx);
+  }
 
   // ===== transfer fee logic =====
   // base fee by level, discounted further if the user watches a rewarded ad (once per day, simple/golden only)
@@ -2036,15 +2091,26 @@
         if(!currentUser?.id){ showToast('اول باید وارد بشی'); return; }
         const pkg=STORE_PACKAGES.find(p=>p.id===btn.dataset.pkg), method=btn.dataset.method;
         btn.disabled=true;
-        showToast(method==='TON' ? 'در حال اتصال به کیف‌پول TON…' : 'در حال باز شدن پرداخت با Stars…');
 
-        // TODO: this still only *simulates* the payment step (TON Connect / Telegram
-        // Payments isn't wired up yet) — but once "paid", it now really persists via
-        // purchase_package instead of just updating local state.
-        setTimeout(async ()=>{
-          const paidAmount = method==='TON'
-            ? Math.round((pkg.usd/PRICING.TON_USD_RATE)*100)/100
-            : Math.round(pkg.usd*PRICING.STARS_PER_USD);
+        const paidAmount = method==='TON'
+          ? Math.round((pkg.usd/PRICING.TON_USD_RATE)*100)/100
+          : Math.round(pkg.usd*PRICING.STARS_PER_USD);
+
+        (async ()=>{
+          if(method==='TON'){
+            showToast('در حال اتصال به کیف‌پول TON…');
+            try{
+              await sendTonPayment(paidAmount);
+            } catch(e){
+              btn.disabled=false;
+              showToast('پرداخت لغو شد یا انجام نشد');
+              return;
+            }
+          } else {
+            showToast('در حال باز شدن پرداخت با Stars…');
+            // TODO: Stars پرداخت واقعی نیاز به Telegram Payments API سمت بات داره — هنوز شبیه‌سازیه
+            await new Promise(r=>setTimeout(r,1200));
+          }
 
           const { data, error } = await sb.rpc('purchase_package', {
             p_user_id: currentUser.id,
@@ -2068,7 +2134,7 @@
           await loadTasks();
           renderMyLinks();
           showToast('◈ خرید با موفقیت انجام شد ✓');
-        },1200);
+        })();
       });
     });
 
@@ -2226,4 +2292,3 @@
 </script>
 </body>
 </html>
-
