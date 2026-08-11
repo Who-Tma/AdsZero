@@ -408,16 +408,58 @@
     border:1px solid var(--cyan);padding:11px 20px;border-radius:10px;font-size:12px;font-weight:600;font-family:'Space Grotesk';
     opacity:0;transition:.3s;z-index:90;max-width:85%;text-align:center;color:var(--cyan)}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ===== loading screen — shown until the user's real data has loaded, then fades out ===== */
+  .load-screen{position:absolute;inset:0;z-index:200;background:var(--bg);
+    display:flex;align-items:center;justify-content:center;overflow:hidden;
+    transition:opacity .5s ease}
+  .load-screen.hide{opacity:0;pointer-events:none}
+  .load-grid-bg{position:absolute;inset:0;
+    background-image:linear-gradient(rgba(51,240,255,.04) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(51,240,255,.04) 1px, transparent 1px);
+    background-size:28px 28px; mask-image:radial-gradient(circle at 50% 40%, black, transparent 70%);
+    z-index:0; pointer-events:none}
+  .load-core-wrap{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:22px}
+  .load-core{width:88px;height:88px;border-radius:50%;border:1px solid rgba(51,240,255,.35);
+    display:flex;align-items:center;justify-content:center;font-size:38px;position:relative;
+    background:var(--bg);box-shadow:0 0 22px rgba(51,240,255,.2)}
+  .load-core::before{content:'';position:absolute;inset:-26px;border-radius:50%;z-index:-1;
+    filter:blur(18px);opacity:.5;
+    background:conic-gradient(from 0deg, rgba(51,240,255,.4), rgba(123,92,250,.35), rgba(51,240,255,.4));
+    animation:loadAuraSpin 6s linear infinite, loadAuraPulse 2.6s ease-in-out infinite}
+  .load-core-glyph{animation:loadGlyphPulse 2.6s ease-in-out infinite; color:var(--cyan)}
+  @keyframes loadAuraSpin{ to{transform:rotate(360deg)} }
+  @keyframes loadAuraPulse{ 0%,100%{opacity:.35} 50%{opacity:.65} }
+  @keyframes loadGlyphPulse{ 0%,100%{opacity:.75;transform:scale(1)} 50%{opacity:1;transform:scale(1.08)} }
+  .load-brand{font-family:'Space Grotesk';font-weight:700;font-size:22px;letter-spacing:.5px;color:var(--text)}
+  .load-brand .load-z{color:var(--cyan)}
+  .load-status{font-size:12.5px;color:var(--text-dim);font-family:'Vazirmatn';min-height:18px;transition:opacity .3s}
+  .load-track{width:180px;height:3px;background:var(--panel);border-radius:99px;overflow:hidden;position:relative}
+  .load-fill{position:absolute;top:0;bottom:0;left:0;width:40%;border-radius:99px;
+    background:linear-gradient(90deg,var(--violet),var(--cyan));
+    animation:loadSlide 1.4s ease-in-out infinite}
+  @keyframes loadSlide{ 0%{left:-40%} 100%{left:100%} }
 </style>
 </head>
 <body>
 <div class="app">
   <div class="grid-bg"></div>
 
+  <div class="load-screen" id="loadScreen">
+    <div class="load-grid-bg"></div>
+    <div class="load-core-wrap">
+      <div class="load-core"><span class="load-core-glyph">◈</span></div>
+      <div class="load-brand">Ads<span class="load-z">Zero</span></div>
+      <div class="load-track"><div class="load-fill"></div></div>
+      <div class="load-status" id="loadStatusText">در حال اتصال به تلگرام…</div>
+    </div>
+  </div>
+
   <div class="header">
     <div class="top-row">
       <div class="wallet-top-group">
         <button class="connect-wallet-btn" id="connectWalletBtn"><span class="cw-ic">👛</span>Connect Wallet</button>
+
         <div class="wallet-balance-box" id="realWalletBalanceBox">
           <span class="wbb-label">TON</span>
           <span class="wbb-value" id="realWalletBalance">—</span>
@@ -772,6 +814,24 @@
     tg.expand();
   }
 
+  // ===== loading screen: cycles a status line while login/data load, fades out once ready =====
+  const LOAD_STATUS_STEPS = ["در حال اتصال به تلگرام…", "در حال گرفتن اطلاعات حساب…", "در حال آماده‌سازی چالش‌ها…"];
+  let loadStatusIndex = 0;
+  const loadStatusEl = document.getElementById('loadStatusText');
+  const loadStatusInterval = setInterval(()=>{
+    loadStatusIndex = (loadStatusIndex+1) % LOAD_STATUS_STEPS.length;
+    loadStatusEl.style.opacity = 0;
+    setTimeout(()=>{ loadStatusEl.textContent = LOAD_STATUS_STEPS[loadStatusIndex]; loadStatusEl.style.opacity = 1; }, 250);
+  }, 1600);
+
+  function hideLoadingScreen(){
+    const el = document.getElementById('loadScreen');
+    if(!el || el.classList.contains('hide')) return;
+    clearInterval(loadStatusInterval);
+    el.classList.add('hide');
+    setTimeout(()=>{ el.style.display='none'; }, 550); // با مدت transition توی CSS هماهنگه
+  }
+
   // Called at the very bottom of this script (after balance/userLevel/render
   // functions all exist) — sends the raw signed initData to the Edge Function,
   // which verifies it server-side and returns the user's real row.
@@ -819,6 +879,7 @@
   async function loginWithTelegram(){
     if(!tg || !tg.initData){
       showToast('این اپ فقط داخل تلگرام درست کار می‌کنه');
+      hideLoadingScreen();
       return;
     }
     try{
@@ -827,6 +888,7 @@
       });
       if(error || !data?.user){
         showToast('خطا در ورود — لطفاً دوباره امتحان کن');
+        hideLoadingScreen();
         return;
       }
       const u = data.user;
@@ -840,8 +902,10 @@
       updateLevelUI();
       await loadTasks();
       await loadMyOrders();
+      hideLoadingScreen(); // دیتای واقعی گرفته و رندر شد — الان لودینگ رو نرم ببند
     } catch(e){
       showToast('اتصال به سرور برقرار نشد');
+      hideLoadingScreen();
     }
   }
 
