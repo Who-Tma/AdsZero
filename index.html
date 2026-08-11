@@ -498,104 +498,104 @@
         <span id="taskCountLabel">۶ مورد</span>
       </div>
       <div class="cat-filter" id="catFilter">
-        <button class="cat-chip active" data-cat="all">همه</button>
-        <button class="cat-chip" data-cat="channel"><span class="ic">📢</span>کانال/گروه</button>
-        <button class="cat-chip" data-cat="bot"><span class="ic">🤖</span>بات/مینی‌اپ</button>
+        <button class="cat-chip active" data-cat="all" data-i18n="cat_all">همه</button>
+        <button class="cat-chip" data-cat="channel"><span class="ic">📢</span><span data-i18n="cat_channel">کانال/گروه</span></button>
+        <button class="cat-chip" data-cat="bot"><span class="ic">🤖</span><span data-i18n="cat_bot">بات/مینی‌اپ</span></button>
       </div>
       <div class="list" id="list"></div>
     </div>
 
     <div class="pane" id="pane-links">
-      <div class="pane-title"><span>چه نوع تبلیغی می‌خوای ثبت کنی؟</span></div>
+      <div class="pane-title"><span data-i18n="pane_links_title">چه نوع تبلیغی می‌خوای ثبت کنی؟</span></div>
 
       <div class="type-grid">
         <button class="type-card selected" id="typeChannel" data-type="channel">
-          <span class="ic">📢</span><span class="lbl">کانال / گروه</span>
+          <span class="ic">📢</span><span class="lbl" data-i18n="type_channel_label">کانال / گروه</span>
         </button>
         <button class="type-card" id="typeBot" data-type="bot">
-          <span class="ic">🤖</span><span class="lbl">بات / مینی‌اپ</span>
+          <span class="ic">🤖</span><span class="lbl" data-i18n="type_bot_label">بات / مینی‌اپ</span>
         </button>
         <button class="type-card soon" id="typeVideo" data-type="video">
-          <span class="soon-badge">به‌زودی</span>
-          <span class="ic">🎬</span><span class="lbl">ویدیو تشویقی</span>
+          <span class="soon-badge" data-i18n="soon_badge">به‌زودی</span>
+          <span class="ic">🎬</span><span class="lbl" data-i18n="type_video_label">ویدیو تشویقی</span>
         </button>
       </div>
 
       <div class="ref-card" id="orderForm">
         <h3 id="orderTitle">◈ ثبت سفارش کانال / گروه</h3>
         <p id="orderDesc">لینکت رو بذار و انتخاب کن کاربر چند ساعت باید بمونه تا سکه‌ی کامل بگیره. هرچی مدت بیشتر، اعتماد و کیفیت عضو بالاتر میره.</p>
-        <div class="dur-label">نام (همینو تو چالش‌ها می‌بینن):</div>
+        <div class="dur-label" data-i18n="label_name">نام (همینو تو چالش‌ها می‌بینن):</div>
         <div class="ref-input" style="margin-bottom:10px"><input id="nameInput" placeholder="مثلاً کانال بازار طلا" maxlength="40"></div>
-        <div class="dur-label">لینک: <span class="link-hint" id="linkHintLabel"></span></div>
+        <div class="dur-label"><span data-i18n="label_link">لینک:</span> <span class="link-hint" id="linkHintLabel"></span></div>
         <div class="ref-input"><input id="linkInput" placeholder="t.me/yourchannel"></div>
         <div class="dur-hint" id="linkCheckStatus" style="display:none;margin-top:-6px"></div>
 
         <div id="durationSection">
-          <div class="dur-label">مدت ماندگاری موردنیاز:</div>
+          <div class="dur-label" data-i18n="label_duration">مدت ماندگاری موردنیاز:</div>
           <div class="dur-options" id="durOptions"></div>
           <div class="custom-hour-row" id="customHourRow" style="display:none">
-            <input type="number" id="customHourInput" min="1" max="72" placeholder="ساعت دلخواه (۱ تا ۷۲)">
+            <input type="number" id="customHourInput" min="1" max="72" placeholder="ساعت دلخواه (۱ تا ۷۲)" data-i18n-ph="custom_hour_placeholder">
           </div>
           <div class="dur-hint" id="durHint">حداقل قیمت واحد برای ۱۲ ساعت: ۵,۶۰۰ کوین</div>
         </div>
 
-        <div class="dur-label">تعداد کاربری که می‌خوای این تبلیغ رو ببینن:</div>
+        <div class="dur-label" data-i18n="label_qty">تعداد کاربری که می‌خوای این تبلیغ رو ببینن:</div>
         <div class="ref-input" style="margin-bottom:10px">
-          <input type="number" id="qtyInput" placeholder="مثلاً 100" min="1" step="1">
+          <input type="number" id="qtyInput" placeholder="مثلاً 100" min="1" step="1" data-i18n-ph="qty_placeholder">
         </div>
 
-        <div class="dur-label">قیمت هر واحد (به کوین):</div>
+        <div class="dur-label" data-i18n="label_unit_price">قیمت هر واحد (به کوین):</div>
         <div class="ref-input" style="margin-bottom:12px">
           <input type="number" id="priceInput" placeholder="مثلاً 5600">
         </div>
 
         <div class="summary-box" id="summaryBox">
-          <div class="sum-row"><span>تعداد</span><span id="sumQty">—</span></div>
-          <div class="sum-row"><span>قیمت هر یک واحد</span><span id="sumUnit">—</span></div>
-          <div class="sum-row"><span>تخفیف سطح</span><span id="sumDiscount">۰</span></div>
-          <div class="sum-row"><span>کارمزد ثبت سفارش</span><span style="color:#4ADE80">۰ (رایگان)</span></div>
-          <div class="sum-row total"><span>قیمت نهایی سبد خرید</span><span id="sumTotal">—</span></div>
+          <div class="sum-row"><span data-i18n="sum_qty">تعداد</span><span id="sumQty">—</span></div>
+          <div class="sum-row"><span data-i18n="sum_unit">قیمت هر یک واحد</span><span id="sumUnit">—</span></div>
+          <div class="sum-row"><span data-i18n="sum_discount">تخفیف سطح</span><span id="sumDiscount">۰</span></div>
+          <div class="sum-row"><span data-i18n="sum_order_fee">کارمزد ثبت سفارش</span><span style="color:#4ADE80" data-i18n="sum_order_fee_free">۰ (رایگان)</span></div>
+          <div class="sum-row total"><span data-i18n="sum_total">قیمت نهایی سبد خرید</span><span id="sumTotal">—</span></div>
         </div>
 
         <div class="suggest-row" id="suggestRow">
-          <span class="suggest-text">با توجه به موجودی شما، بهترین پیشنهاد رو براتون در نظر می‌گیریم.</span>
-          <button class="suggest-btn" id="suggestBtn">پیشنهاد</button>
+          <span class="suggest-text" data-i18n="suggest_text">با توجه به موجودی شما، بهترین پیشنهاد رو براتون در نظر می‌گیریم.</span>
+          <button class="suggest-btn" id="suggestBtn" data-i18n="suggest_btn">پیشنهاد</button>
         </div>
 
-        <button class="submit-btn" id="submitOrderBtn">بررسی لینک</button>
+        <button class="submit-btn" id="submitOrderBtn" data-i18n="btn_check_link">بررسی لینک</button>
       </div>
 
       <div class="ref-card soon-card" id="videoComingSoon" style="display:none">
-        <h3>🎬 تبلیغ ویدیو تشویقی</h3>
-        <p>این نوع تبلیغ (رول ادز اختصاصی اپ، با عکس کاور، لینک، عنوان و توضیح کوتاه) داره طراحی میشه. به‌زودی فعال میشه.</p>
-        <div class="soon-note">در حال توسعه…</div>
+        <h3 data-i18n="video_title">🎬 تبلیغ ویدیو تشویقی</h3>
+        <p data-i18n="video_desc">این نوع تبلیغ (رول ادز اختصاصی اپ، با عکس کاور، لینک، عنوان و توضیح کوتاه) داره طراحی میشه. به‌زودی فعال میشه.</p>
+        <div class="soon-note" data-i18n="video_soon_note">در حال توسعه…</div>
       </div>
 
-      <div class="pane-title" style="padding-top:4px"><span>لینک‌های ثبت‌شده‌ی من</span></div>
+      <div class="pane-title" style="padding-top:4px"><span data-i18n="my_links_title">لینک‌های ثبت‌شده‌ی من</span></div>
       <div id="myLinksList"></div>
-      <div class="empty-hint" id="myLinksEmpty">هنوز سفارشی ثبت نکردی — از فرم بالا شروع کن.</div>
+      <div class="empty-hint" id="myLinksEmpty" data-i18n="my_links_empty">هنوز سفارشی ثبت نکردی — از فرم بالا شروع کن.</div>
     </div>
 
     <div class="pane" id="pane-wallet">
       <div class="pane-title">
-        <span>کیف‌پول</span>
-        <button class="history-btn" id="historyBtn">تاریخچه<span class="unread-dot" id="unreadDot"></span></button>
+        <span data-i18n="wallet_title">کیف‌پول</span>
+        <button class="history-btn" id="historyBtn"><span data-i18n="history_btn">تاریخچه</span><span class="unread-dot" id="unreadDot"></span></button>
       </div>
       <div class="wallet-card">
-        <div class="label-sm">موجودی</div>
+        <div class="label-sm" data-i18n="wallet_balance_label">موجودی</div>
         <div class="big" id="walletUsd">$4.90</div>
-        <button class="wb-btn wb-transfer" id="transferBtn">↗ انتقال موجودی</button>
+        <button class="wb-btn wb-transfer" id="transferBtn" data-i18n="transfer_btn">↗ انتقال موجودی</button>
       </div>
     </div>
 
     <div class="pane" id="pane-store">
-      <div class="pane-title"><span>فروشگاه</span></div>
+      <div class="pane-title"><span data-i18n="store_title">فروشگاه</span></div>
       <div class="store-list" id="storeList">
         <div class="store-card" id="storeCardSpin">
           <div class="sc-icon">🎡</div>
           <div class="sc-body">
-            <div class="sc-title">گردونه شانس روزانه</div>
-            <div class="sc-sub">هر روز یه بار بچرخون، شانسی سکه رایگان بگیر</div>
+            <div class="sc-title" data-i18n="spin_title">گردونه شانس روزانه</div>
+            <div class="sc-sub" data-i18n="spin_sub">هر روز یه بار بچرخون، شانسی سکه رایگان بگیر</div>
           </div>
           <div class="sc-buy">
             <button class="store-buy-btn free" id="spinFreeBtn">Free</button>
@@ -609,26 +609,26 @@
 
   <div class="tabbar">
     <div class="tab-indicator" id="tabIndicator"></div>
-    <button class="tab active" data-pane="tasks"><span class="ic">◈</span>چالش‌ها</button>
-    <button class="tab" data-pane="links"><span class="ic">⛓</span>لینک‌ها</button>
-    <button class="tab" data-pane="store"><span class="ic">🛍</span>فروشگاه<span class="tab-dot" id="storeTabDot"></span></button>
-    <button class="tab" data-pane="wallet"><span class="ic">👛</span>انتقال موجودی</button>
+    <button class="tab active" data-pane="tasks"><span class="ic">◈</span><span data-i18n="nav_tasks">چالش‌ها</span></button>
+    <button class="tab" data-pane="links"><span class="ic">⛓</span><span data-i18n="nav_links">لینک‌ها</span></button>
+    <button class="tab" data-pane="store"><span class="ic">🛍</span><span data-i18n="nav_store">فروشگاه</span><span class="tab-dot" id="storeTabDot"></span></button>
+    <button class="tab" data-pane="wallet"><span class="ic">👛</span><span data-i18n="nav_wallet">انتقال موجودی</span></button>
   </div>
 
   <div class="modal-overlay" id="suggestModal">
     <div class="modal-box">
       <div class="modal-head">
-        <span>◈ پیشنهاد هوشمند</span>
+        <span data-i18n="suggest_modal_title">◈ پیشنهاد هوشمند</span>
         <button class="modal-close" id="modalClose">✕</button>
       </div>
-      <p class="modal-desc">بر اساس موجودی فعلی‌ت (<strong id="modalBalance">245,000</strong> کوین)، این ترکیب رو براتون در نظر گرفتیم:</p>
+      <p class="modal-desc" id="suggestModalDesc">بر اساس موجودی فعلی‌ت (<strong id="modalBalance">245,000</strong> کوین)، این ترکیب رو براتون در نظر گرفتیم:</p>
       <div class="modal-grid">
-        <div class="modal-stat"><span class="k">تعداد پیشنهادی</span><span class="v" id="sugQty">—</span></div>
-        <div class="modal-stat"><span class="k">مدت پیشنهادی</span><span class="v" id="sugDur">—</span></div>
-        <div class="modal-stat"><span class="k">قیمت هر واحد</span><span class="v" id="sugUnit">—</span></div>
-        <div class="modal-stat"><span class="k">جمع کل</span><span class="v hi" id="sugTotal">—</span></div>
+        <div class="modal-stat"><span class="k" data-i18n="sug_qty_label">تعداد پیشنهادی</span><span class="v" id="sugQty">—</span></div>
+        <div class="modal-stat"><span class="k" data-i18n="sug_dur_label">مدت پیشنهادی</span><span class="v" id="sugDur">—</span></div>
+        <div class="modal-stat"><span class="k" data-i18n="sug_unit_label">قیمت هر واحد</span><span class="v" id="sugUnit">—</span></div>
+        <div class="modal-stat"><span class="k" data-i18n="sug_total_label">جمع کل</span><span class="v hi" id="sugTotal">—</span></div>
       </div>
-      <button class="apply-btn" id="applySuggest">اعمال روی فرم</button>
+      <button class="apply-btn" id="applySuggest" data-i18n="apply_suggest_btn">اعمال روی فرم</button>
     </div>
   </div>
 
@@ -641,29 +641,29 @@
 
       <div class="progress-stats">
         <div class="pstat">
-          <div class="pstat-top"><span>پر شده</span><span id="statFilled">۰/۰</span></div>
+          <div class="pstat-top"><span data-i18n="stat_filled">پر شده</span><span id="statFilled">۰/۰</span></div>
           <div class="pbar"><div class="pbar-fill" id="barFilled"></div></div>
         </div>
         <div class="pstat">
-          <div class="pstat-top"><span>در حال بررسی</span><span id="statPending">۰/۰</span></div>
+          <div class="pstat-top"><span data-i18n="stat_pending">در حال بررسی</span><span id="statPending">۰/۰</span></div>
           <div class="pbar amber"><div class="pbar-fill" id="barPending"></div></div>
         </div>
         <div class="pstat">
-          <div class="pstat-top"><span>تکمیل‌شده</span><span id="statCompleted">۰/۰</span></div>
+          <div class="pstat-top"><span data-i18n="stat_completed">تکمیل‌شده</span><span id="statCompleted">۰/۰</span></div>
           <div class="pbar green"><div class="pbar-fill" id="barCompleted"></div></div>
         </div>
       </div>
 
-      <div class="dur-label" style="margin-top:16px">افزایش بودجه (به کوین):</div>
+      <div class="dur-label" style="margin-top:16px" data-i18n="label_boost">افزایش بودجه (به کوین):</div>
       <div class="ref-input" style="margin-bottom:4px">
-        <input type="number" id="boostInput" placeholder="مثلاً 12000">
+        <input type="number" id="boostInput" placeholder="مثلاً 12000" data-i18n-ph="boost_placeholder">
       </div>
       <div class="boost-hint" id="boostHint">قیمت هر واحد این سفارش: — کوین</div>
-      <button class="apply-btn" id="applyBoost" style="margin-top:10px">افزایش بده</button>
+      <button class="apply-btn" id="applyBoost" style="margin-top:10px" data-i18n="btn_apply_boost">افزایش بده</button>
 
       <button class="premium-btn" id="showUsersBtn">
-        <span>👥 نمایش کاربران</span>
-        <span class="lock-badge" id="usersLockBadge">نیاز به پرمیوم</span>
+        <span data-i18n="show_users_btn">👥 نمایش کاربران</span>
+        <span class="lock-badge" id="usersLockBadge" data-i18n="lock_badge">نیاز به پرمیوم</span>
       </button>
     </div>
   </div>
@@ -671,7 +671,7 @@
   <div class="modal-overlay" id="orderUsersModal">
     <div class="modal-box tall">
       <div class="modal-head">
-        <span>👥 کاربران این سفارش</span>
+        <span data-i18n="order_users_title">👥 کاربران این سفارش</span>
         <button class="modal-close" id="orderUsersModalClose">✕</button>
       </div>
       <div class="perks-scroll" id="orderUsersList"></div>
@@ -681,38 +681,38 @@
   <div class="modal-overlay" id="levelModal">
     <div class="modal-box">
       <div class="modal-head">
-        <span>◈ سطح‌های کاربری</span>
+        <span data-i18n="level_modal_title">◈ سطح‌های کاربری</span>
         <button class="modal-close" id="levelModalClose">✕</button>
       </div>
 
       <div class="tier-row" id="tierSimple">
         <div class="tier-ic">◈</div>
         <div class="tier-body">
-          <div class="tier-name">ساده</div>
-          <div class="tier-desc">دسترسی کامل به چالش‌ها و ثبت سفارش تبلیغ</div>
-          <button class="show-more-link" data-level="simple">مشاهده‌ی بیشتر</button>
+          <div class="tier-name" data-i18n="level_simple_name">ساده</div>
+          <div class="tier-desc" data-i18n="level_simple_desc">دسترسی کامل به چالش‌ها و ثبت سفارش تبلیغ</div>
+          <button class="show-more-link" data-level="simple" data-i18n="show_more_link">مشاهده‌ی بیشتر</button>
         </div>
       </div>
 
       <div class="tier-row" id="tierGolden">
         <div class="tier-ic gold">🥇</div>
         <div class="tier-body">
-          <div class="tier-name">گلدن <span class="tier-req">— با ۳ رفرال موفق</span></div>
-          <div class="tier-desc">+۵٪ سکه روی هر چالش تکمیل‌شده، اولویت نمایش سفارش‌های خودت</div>
-          <button class="show-more-link" data-level="golden">مشاهده‌ی بیشتر</button>
+          <div class="tier-name"><span data-i18n="level_golden_name">گلدن</span> <span class="tier-req" data-i18n="level_golden_req">— با ۳ رفرال موفق</span></div>
+          <div class="tier-desc" data-i18n="level_golden_desc">+۵٪ سکه روی هر چالش تکمیل‌شده، اولویت نمایش سفارش‌های خودت</div>
+          <button class="show-more-link" data-level="golden" data-i18n="show_more_link">مشاهده‌ی بیشتر</button>
         </div>
       </div>
 
       <div class="tier-row" id="tierPremium">
         <div class="tier-ic violet">💎</div>
         <div class="tier-body">
-          <div class="tier-name">پرمیوم <span class="tier-req">— خرید با TON یا Stars</span></div>
-          <div class="tier-desc">نمایش کاربران هر سفارش، بدون محدودیت تعداد سفارش هم‌زمان</div>
-          <button class="show-more-link" data-level="premium">مشاهده‌ی بیشتر</button>
+          <div class="tier-name"><span data-i18n="level_premium_name">پرمیوم</span> <span class="tier-req" data-i18n="level_premium_req">— خرید با TON یا Stars</span></div>
+          <div class="tier-desc" data-i18n="level_premium_desc">نمایش کاربران هر سفارش، بدون محدودیت تعداد سفارش هم‌زمان</div>
+          <button class="show-more-link" data-level="premium" data-i18n="show_more_link">مشاهده‌ی بیشتر</button>
         </div>
       </div>
 
-      <div class="level-you">سطح فعلی تو: <strong id="levelYouLabel">ساده</strong></div>
+      <div class="level-you"><span data-i18n="level_you_label">سطح فعلی تو:</span> <strong id="levelYouLabel">ساده</strong></div>
     </div>
   </div>
 
@@ -731,18 +731,18 @@
   <div class="modal-overlay" id="transferModal">
     <div class="modal-box">
       <div class="modal-head">
-        <span>↗ انتقال موجودی</span>
+        <span data-i18n="transfer_modal_title">↗ انتقال موجودی</span>
         <button class="modal-close" id="transferModalClose">✕</button>
       </div>
 
-      <div class="dur-label">آیدی کاربر گیرنده:</div>
+      <div class="dur-label" data-i18n="label_recipient">آیدی کاربر گیرنده:</div>
       <div class="ref-input" style="margin-bottom:12px">
-        <input id="recipientInput" placeholder="مثلاً @username یا ID">
+        <input id="recipientInput" placeholder="مثلاً @username یا ID" data-i18n-ph="recipient_placeholder">
       </div>
 
-      <div class="dur-label">مبلغ انتقال (کوین):</div>
+      <div class="dur-label" data-i18n="label_transfer_amount">مبلغ انتقال (کوین):</div>
       <div class="amount-row">
-        <input type="number" id="amountInput" placeholder="مثلاً 50000">
+        <input type="number" id="amountInput" placeholder="مثلاً 50000" data-i18n-ph="amount_placeholder">
         <button class="quick-pct" data-pct="50">۵۰٪</button>
         <button class="quick-pct" data-pct="100">۱۰۰٪</button>
       </div>
@@ -755,10 +755,10 @@
       <button class="check-btn" id="checkUserBtn">Chek User</button>
 
       <div class="summary-box" style="margin-top:14px">
-        <div class="sum-row"><span>سکه انتخاب‌شده</span><span id="tSumAmount">—</span></div>
-        <div class="sum-row"><span>کارمزد تراکنش</span><span id="tSumFee">—</span></div>
-        <div class="sum-row"><span>نام کاربر انتخاب‌شده</span><span id="tSumUser" style="color:var(--text)">—</span></div>
-        <div class="sum-row total"><span>انتقال نهایی</span><span id="tSumFinal">—</span></div>
+        <div class="sum-row"><span data-i18n="sum_amount_label">سکه انتخاب‌شده</span><span id="tSumAmount">—</span></div>
+        <div class="sum-row"><span data-i18n="sum_fee_label">کارمزد تراکنش</span><span id="tSumFee">—</span></div>
+        <div class="sum-row"><span data-i18n="sum_recipient_label">نام کاربر انتخاب‌شده</span><span id="tSumUser" style="color:var(--text)">—</span></div>
+        <div class="sum-row total"><span data-i18n="sum_final_label">انتقال نهایی</span><span id="tSumFinal">—</span></div>
       </div>
     </div>
   </div>
@@ -766,7 +766,7 @@
   <div class="modal-overlay" id="spinModal">
     <div class="modal-box">
       <div class="modal-head">
-        <span>🎡 گردونه شانس روزانه</span>
+        <span data-i18n="spin_title">🎡 گردونه شانس روزانه</span>
         <button class="modal-close" id="spinModalClose">✕</button>
       </div>
       <div id="spinTierList"></div>
@@ -776,25 +776,25 @@
   <div class="modal-overlay" id="historyModal">
     <div class="modal-box">
       <div class="modal-head">
-        <span>تاریخچه‌ی انتقال‌ها</span>
+        <span data-i18n="history_title">تاریخچه‌ی انتقال‌ها</span>
         <button class="modal-close" id="historyModalClose">✕</button>
       </div>
       <div id="historyList"></div>
-      <div class="empty-hint" id="historyEmpty">هنوز انتقالی انجام ندادی.</div>
+      <div class="empty-hint" id="historyEmpty" data-i18n="history_empty">هنوز انتقالی انجام ندادی.</div>
     </div>
   </div>
 
   <div class="modal-overlay" id="historyDetailModal">
     <div class="modal-box">
       <div class="modal-head">
-        <span>جزئیات تراکنش</span>
+        <span data-i18n="detail_title">جزئیات تراکنش</span>
         <button class="modal-close" id="historyDetailClose">✕</button>
       </div>
-      <div class="detail-row"><span>تاریخ</span><span id="detDate">—</span></div>
-      <div class="detail-row"><span>کارمزد</span><span id="detFee">—</span></div>
-      <div class="detail-row"><span>مبلغ انتقالی</span><span id="detAmount">—</span></div>
-      <div class="detail-row"><span>مبلغ نهایی</span><span id="detFinal">—</span></div>
-      <div class="detail-row copyable" id="detIdRow"><span>آیدی گیرنده</span><span id="detId">—</span></div>
+      <div class="detail-row"><span data-i18n="detail_date">تاریخ</span><span id="detDate">—</span></div>
+      <div class="detail-row"><span data-i18n="detail_fee">کارمزد</span><span id="detFee">—</span></div>
+      <div class="detail-row"><span data-i18n="detail_amount">مبلغ انتقالی</span><span id="detAmount">—</span></div>
+      <div class="detail-row"><span data-i18n="detail_final">مبلغ نهایی</span><span id="detFinal">—</span></div>
+      <div class="detail-row copyable" id="detIdRow"><span data-i18n="detail_recipient_id">آیدی گیرنده</span><span id="detId">—</span></div>
     </div>
   </div>
 
@@ -806,6 +806,1049 @@
   const SUPABASE_ANON_KEY = 'sb_publishable_wpweNypDHTUGh4-l6WPUHg_2rNOELYf';
   const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+  // ===== i18n =====
+  const I18N = {
+ "fa": {
+  "nav_tasks": "چالش‌ها",
+  "nav_links": "لینک‌ها",
+  "nav_store": "فروشگاه",
+  "nav_wallet": "انتقال موجودی",
+  "balance_label": "موجودی",
+  "connect_wallet_btn": "Connect Wallet",
+  "level_strip_progress": "{count}/{req} تا سطح گلدن",
+  "level_strip_golden_active": "سطح گلدن فعاله — برای پرمیوم با TON ارتقا بده",
+  "level_strip_premium_active": "سطح پرمیوم فعاله ✦",
+  "pane_tasks_title": "چالش‌های امروز",
+  "pill_reviewing": "{count} چالش در حال بررسی",
+  "task_count_label": "{count} مورد",
+  "cat_all": "همه",
+  "cat_channel": "کانال/گروه",
+  "cat_bot": "بات/مینی‌اپ",
+  "task_empty": "فعلاً چالشی موجود نیست — به‌زودی سفارش‌های جدید اینجا نمایش داده میشن.",
+  "btn_start": "شروع",
+  "btn_chek": "Chek",
+  "btn_waiting": "در انتظار",
+  "pending_note": "در انتظار پرداخت کامل — بعد از اتمام {dur} ساعت",
+  "reward_instant_later": "+{instant} فوری / +{later} بعداً",
+  "reward_coin": "+{amount} coin",
+  "badge_referral": "🔗 رفرال",
+  "badge_hours": "{dur} ساعت",
+  "pane_links_title": "چه نوع تبلیغی می‌خوای ثبت کنی؟",
+  "type_channel_label": "کانال / گروه",
+  "type_bot_label": "بات / مینی‌اپ",
+  "type_video_label": "ویدیو تشویقی",
+  "soon_badge": "به‌زودی",
+  "order_title_channel": "◈ ثبت سفارش کانال / گروه",
+  "order_desc_channel": "لینکت رو بذار و انتخاب کن کاربر چند ساعت باید بمونه تا سکه‌ی کامل بگیره. هرچی مدت بیشتر، اعتماد و کیفیت عضو بالاتر میره.",
+  "order_title_bot": "◈ ثبت سفارش بات / مینی‌اپ",
+  "order_desc_bot": "لینک بات، مینی‌اپ یا حتی لینک رفرالت رو بذار. چون نمیشه فهمید کاربر چقدر داخل بات می‌مونه، سکه بلافاصله بعد از تایید واریز میشه.",
+  "name_placeholder_channel": "مثلاً کانال بازار طلا",
+  "name_placeholder_bot": "مثلاً ربات کوییز طلایی",
+  "link_placeholder_channel": "t.me/yourchannel",
+  "link_placeholder_bot": "t.me/yourbot",
+  "link_hint_bot": "(می‌تونی لینک رفرال خودتو هم اینجا بذاری)",
+  "link_hint_channel": "",
+  "label_name": "نام (همینو تو چالش‌ها می‌بینن):",
+  "label_link": "لینک:",
+  "label_duration": "مدت ماندگاری موردنیاز:",
+  "custom_hour_placeholder": "ساعت دلخواه (۱ تا ۷۲)",
+  "dur_hint_min": "حداقل قیمت واحد برای {dur} ساعت: {price} کوین",
+  "label_qty": "تعداد کاربری که می‌خوای این تبلیغ رو ببینن:",
+  "qty_placeholder": "مثلاً 100",
+  "label_unit_price": "قیمت هر واحد (به کوین):",
+  "unit_price_placeholder": "مثلاً {n}",
+  "sum_qty": "تعداد",
+  "sum_unit": "قیمت هر یک واحد",
+  "sum_discount": "تخفیف سطح",
+  "sum_order_fee": "کارمزد ثبت سفارش",
+  "sum_order_fee_free": "۰ (رایگان)",
+  "sum_total": "قیمت نهایی سبد خرید",
+  "suggest_text": "با توجه به موجودی شما، بهترین پیشنهاد رو براتون در نظر می‌گیریم.",
+  "suggest_btn": "پیشنهاد",
+  "btn_check_link": "بررسی لینک",
+  "btn_checking": "در حال بررسی…",
+  "btn_submit_order": "ثبت سفارش",
+  "link_not_found": "این لینک پیدا نشد — لینک عمومی و درست رو وارد کن (برای کانال/گروه خصوصی، بات باید عضوش باشه)",
+  "link_verified": "✓ لینک تأیید شد: {title}",
+  "video_title": "🎬 تبلیغ ویدیو تشویقی",
+  "video_desc": "این نوع تبلیغ (رول ادز اختصاصی اپ، با عکس کاور، لینک، عنوان و توضیح کوتاه) داره طراحی میشه. به‌زودی فعال میشه.",
+  "video_soon_note": "در حال توسعه…",
+  "video_soon_toast": "این بخش به‌زودی فعال میشه",
+  "my_links_title": "لینک‌های ثبت‌شده‌ی من",
+  "my_links_empty": "هنوز سفارشی ثبت نکردی — از فرم بالا شروع کن.",
+  "wallet_title": "کیف‌پول",
+  "history_btn": "تاریخچه",
+  "wallet_balance_label": "موجودی",
+  "transfer_btn": "↗ انتقال موجودی",
+  "store_title": "فروشگاه",
+  "spin_title": "گردونه شانس روزانه",
+  "spin_sub": "هر روز یه بار بچرخون، شانسی سکه رایگان بگیر",
+  "suggest_modal_title": "◈ پیشنهاد هوشمند",
+  "suggest_modal_desc": "بر اساس موجودی فعلی‌ت ({balance} کوین)، این ترکیب رو براتون در نظر گرفتیم:",
+  "sug_qty_label": "تعداد پیشنهادی",
+  "sug_dur_label": "مدت پیشنهادی",
+  "sug_unit_label": "قیمت هر واحد",
+  "sug_total_label": "جمع کل",
+  "apply_suggest_btn": "اعمال روی فرم",
+  "suggest_applied_toast": "پیشنهاد روی فرم اعمال شد ✓",
+  "order_modal_default_title": "◈ جزئیات سفارش",
+  "stat_filled": "پر شده",
+  "stat_pending": "در حال بررسی",
+  "stat_completed": "تکمیل‌شده",
+  "label_boost": "افزایش بودجه (به کوین):",
+  "boost_placeholder": "مثلاً 12000",
+  "boost_hint_default": "قیمت هر واحد این سفارش: {price} کوین",
+  "boost_hint_calc_discount": "= +{units} واحد — هزینه: {cost} کوین ({pct}% تخفیف اعمال شد)",
+  "boost_hint_calc": "= +{units} واحد (قیمت هر واحد: {price} کوین)",
+  "btn_apply_boost": "افزایش بده",
+  "show_users_btn": "👥 نمایش کاربران",
+  "lock_badge": "نیاز به پرمیوم",
+  "boost_invalid_amount": "یه مبلغ معتبر وارد کن",
+  "boost_insufficient": "موجودی کافی نیست",
+  "boost_error": "خطا: {msg}",
+  "boost_success_toast": "◈ بودجه افزایش یافت: +{units} واحد",
+  "order_users_title": "👥 کاربران این سفارش",
+  "order_users_loading": "در حال بارگذاری…",
+  "order_users_locked_toast": "این قابلیت نیاز به سطح پرمیوم داره 🔒",
+  "order_users_error": "خطا در گرفتن اطلاعات کاربران",
+  "order_users_empty": "هنوز کسی این چالش رو شروع نکرده.",
+  "state_opened": "شروع‌شده",
+  "state_pending": "در حال بررسی",
+  "state_done": "تکمیل‌شده ✓",
+  "user_fallback": "کاربر {id}",
+  "dur_hours_label": "{n} ساعت",
+  "dur_locked_hint": "ارتقا به گلدن",
+  "dur_custom_label": "دلخواه",
+  "dur_locked_toast": "این بازه با ارتقا به سطح گلدن باز میشه 🔒",
+  "toast_enter_link": "اول لینکش رو وارد کن",
+  "toast_looks_like_bot": "این لینک شبیه یه بات هست — برای بات از تب «بات/مینی‌اپ» استفاده کن",
+  "toast_bot_username_must_end": "یوزرنیم بات‌های تلگرام همیشه به bot ختم می‌شه — لینک بات رو وارد کن",
+  "toast_login_required": "اول باید وارد بشی",
+  "toast_enter_name": "اول اسمش رو وارد کن",
+  "toast_enter_qty": "تعداد کاربر رو وارد کن",
+  "toast_enter_unit_price": "قیمت هر واحد رو وارد کن",
+  "toast_bot_min_price": "حداقل قیمت واحد برای بات/مینی‌اپ، {price} کوینه",
+  "toast_min_price_dur": "حداقل قیمت واحد برای {dur} ساعت، {price} کوینه",
+  "toast_insufficient_order": "موجودی برای این سفارش کافی نیست",
+  "toast_order_created": "سفارش برای {qty} کاربر ثبت شد ✓",
+  "toast_generic_error": "خطا: {msg}",
+  "toast_challenge_full": "این چالش پر شده — یکی دیگه رو امتحان کن",
+  "toast_challenge_start_error": "خطا در شروع چالش",
+  "toast_not_member": "هنوز عضو نشدی — اول عضو کانال/گروه شو، بعد دوباره امتحان کن",
+  "toast_reward_error": "خطا در دریافت پاداش",
+  "toast_reward_instant": "◈ {amount} کوین واریز شد ✓",
+  "toast_reward_partial": "◈ {amount} فوری واریز شد — بقیه بعد از {dur} ساعت",
+  "level_modal_title": "◈ سطح‌های کاربری",
+  "level_simple_name": "ساده",
+  "level_golden_name": "گلدن",
+  "level_premium_name": "پرمیوم",
+  "level_golden_req": "— با ۳ رفرال موفق",
+  "level_premium_req": "— خرید با TON یا Stars",
+  "level_simple_desc": "دسترسی کامل به چالش‌ها و ثبت سفارش تبلیغ",
+  "level_golden_desc": "+۵٪ سکه روی هر چالش تکمیل‌شده، اولویت نمایش سفارش‌های خودت",
+  "level_premium_desc": "نمایش کاربران هر سفارش، بدون محدودیت تعداد سفارش هم‌زمان",
+  "show_more_link": "مشاهده‌ی بیشتر",
+  "level_you_label": "سطح فعلی تو:",
+  "perks_simple_0": "دسترسی کامل به همه‌ی چالش‌های روزانه",
+  "perks_simple_1": "ثبت سفارش تبلیغ در کانال/گروه و بات",
+  "perks_simple_2": "بازه‌های زمانی ۳، ۱۲ و ۲۴ ساعته برای سفارش",
+  "perks_simple_3": "کارمزد انتقال موجودی: ۵٪ (با دیدن یک تبلیغ: ۳٪)",
+  "perks_simple_4": "سقف انتقال موجودی: ۱ بار در روز",
+  "perks_simple_5": "کارمزد ثبت سفارش تبلیغ: همیشه ۰ (رایگان)",
+  "perks_golden_0": "+۵٪ سکه‌ی اضافه روی هر چالش تکمیل‌شده",
+  "perks_golden_1": "باز شدن بازه‌ی زمانی ۶ ساعته برای سفارش‌ها",
+  "perks_golden_2": "۵٪ تخفیف روی قیمت ثبت سفارش تبلیغ",
+  "perks_golden_3": "اولویت نمایش سفارش‌های خودت در صف چالش‌ها",
+  "perks_golden_4": "بج طلایی 🥇 کنار نامت",
+  "perks_golden_5": "کارمزد انتقال موجودی: ۳٪ (با دیدن یک تبلیغ: ۱٪)",
+  "perks_golden_6": "سقف انتقال موجودی: ۳ بار در روز",
+  "perks_premium_0": "+۱۲٪ سکه‌ی اضافه روی هر چالش تکمیل‌شده",
+  "perks_premium_1": "انتخاب هر مدت دلخواه بین ۱ تا ۷۲ ساعت برای سفارش",
+  "perks_premium_2": "۱۵٪ تخفیف روی قیمت ثبت سفارش تبلیغ",
+  "perks_premium_3": "نمایش کاربران واقعی هر سفارش",
+  "perks_premium_4": "بدون محدودیت تعداد سفارش هم‌زمان",
+  "perks_premium_5": "کارمزد انتقال موجودی: همیشه ۰٪",
+  "perks_premium_6": "انتقال موجودی: بدون هیچ محدودیت روزانه",
+  "perks_premium_7": "بج الماسی 💎 کنار نامت",
+  "perks_premium_8": "تیک بنفش ✓ کنار اسم کانال/بات‌هایی که ثبت می‌کنی",
+  "invite_btn": "دعوت {count}/{req} دوست",
+  "goto_store_btn": "🛍 مشاهده و خرید در فروشگاه",
+  "transfer_modal_title": "↗ انتقال موجودی",
+  "label_recipient": "آیدی کاربر گیرنده:",
+  "recipient_placeholder": "مثلاً @username یا ID",
+  "label_transfer_amount": "مبلغ انتقال (کوین):",
+  "amount_placeholder": "مثلاً 50000",
+  "ad_discount_default": "با دیدن یک تبلیغ، کارمزد رو کمتر کن",
+  "ad_discount_active": "تخفیف امروز فعاله — کارمزدت {pct}٪ شد ✓",
+  "ad_discount_inactive": "کارمزدت الان {base}٪ه — با دیدن یه تبلیغ می‌شه {discounted}٪",
+  "ad_watch_btn_default": "🎬 تماشا",
+  "ad_watch_btn_playing": "در حال پخش…",
+  "ad_watch_btn_watched": "دیده شد ✓",
+  "toast_ad_error": "خطا — دوباره امتحان کن",
+  "toast_ad_watched": "تبلیغ دیده شد — کارمزد کاهش یافت ✓",
+  "sum_amount_label": "سکه انتخاب‌شده",
+  "sum_fee_label": "کارمزد تراکنش",
+  "sum_recipient_label": "نام کاربر انتخاب‌شده",
+  "sum_final_label": "انتقال نهایی",
+  "toast_enter_recipient": "آیدی گیرنده رو وارد کن",
+  "toast_enter_amount": "مبلغ رو وارد کن",
+  "toast_insufficient": "موجودی کافی نیست",
+  "toast_user_not_found": "کاربری با این آیدی پیدا نشد",
+  "toast_cant_self_transfer": "نمی‌تونی به خودت انتقال بدی",
+  "toast_user_found": "کاربر پیدا شد ✓",
+  "toast_daily_limit": "به سقف روزانه‌ی انتقال رسیدی",
+  "toast_transfer_success": "◈ {amount} کوین برای {name} ارسال شد ✓",
+  "btn_check_user": "Chek User",
+  "btn_send": "Send",
+  "history_title": "تاریخچه‌ی انتقال‌ها",
+  "history_empty": "هنوز انتقالی انجام ندادی.",
+  "history_user_label": "کاربر:",
+  "detail_title": "جزئیات تراکنش",
+  "detail_date": "تاریخ",
+  "detail_fee": "کارمزد",
+  "detail_amount": "مبلغ انتقالی",
+  "detail_final": "مبلغ نهایی",
+  "detail_recipient_id": "آیدی گیرنده",
+  "toast_id_copied": "آیدی کپی شد",
+  "pkg_starter_title": "استارتر پک",
+  "pkg_starter_sub": "۱۰۰,۰۰۰ سکه + تیک آبی کنار اسم لینک‌هات",
+  "pkg_premium_title": "حساب پرمیوم",
+  "pkg_premium_sub": "فعال‌سازی سطح پرمیوم + تیک بنفش کنار اسم لینک‌هات",
+  "pkg_premium500k_title": "پرمیوم + ۵۰۰K سکه",
+  "pkg_premium500k_sub": "فعال‌سازی پرمیوم + ۵۰۰,۰۰۰ کوین هدیه + تیک بنفش کنار اسم لینک‌هات",
+  "pkg_premium500k_ribbon": "بهترین ارزش",
+  "pkg_coins900k_title": "۹۰۰,۰۰۰ سکه",
+  "pkg_coins900k_sub": "شارژ مستقیم موجودی",
+  "toast_creating_invoice": "در حال ساخت فاکتور…",
+  "toast_invoice_error": "خطا در ساخت فاکتور — دوباره امتحان کن",
+  "toast_telegram_only": "این قابلیت فقط داخل تلگرام کار می‌کنه",
+  "toast_confirming_payment": "در حال تأیید پرداخت…",
+  "toast_purchase_success": "◈ خرید با موفقیت انجام شد ✓",
+  "toast_payment_cancelled": "پرداخت لغو شد",
+  "toast_payment_failed": "پرداخت ناموفق بود",
+  "toast_payment_unknown": "وضعیت پرداخت نامشخصه — موجودیت رو چک کن",
+  "toast_connecting_ton": "در حال اتصال به کیف‌پول TON…",
+  "toast_ton_cancelled": "پرداخت لغو شد یا انجام نشد",
+  "toast_confirming_chain": "در حال تأیید تراکنش روی بلاکچین…",
+  "spin_tier_sub_daily": "روزانه گردونه رایگان",
+  "spin_claim_btn": "Claim",
+  "spin_claimed_today": "امروز گرفتی ✓",
+  "spin_claiming": "در حال چرخش…",
+  "spin_error": "خطا در دریافت جایزه",
+  "spin_already_claimed": "امروز قبلاً گرفتی ✓",
+  "spin_won_btn": "+{amount} گرفتی ✓",
+  "spin_won_toast": "◈ {amount} کوین رایگان گرفتی ✓",
+  "spin_tier_simple": "ساده",
+  "spin_tier_golden": "گلدن",
+  "spin_tier_premium": "پرمیوم",
+  "toast_wallet_connected": "کیف‌پول متصل شد ✓",
+  "load_status_1": "در حال اتصال به تلگرام…",
+  "load_status_2": "در حال گرفتن اطلاعات حساب…",
+  "load_status_3": "در حال آماده‌سازی چالش‌ها…",
+  "load_telegram_only": "این اپ فقط داخل تلگرام درست کار می‌کنه",
+  "toast_login_error": "خطا در ورود — لطفاً دوباره امتحان کن",
+  "toast_server_error": "اتصال به سرور برقرار نشد",
+  "toast_tasks_error": "خطا در گرفتن چالش‌ها",
+  "toast_orders_error": "خطا در گرفتن لینک‌های ثبت‌شده",
+  "task_title_join_prefix": "عضویت در ",
+  "task_title_try_prefix": "امتحان ",
+  "tick_premium_title": "پرمیوم",
+  "tick_starter_title": "استارتر پک",
+  "dur_start_link_label": "استارت لینک"
+ },
+ "en": {
+  "nav_tasks": "Tasks",
+  "nav_links": "Links",
+  "nav_store": "Store",
+  "nav_wallet": "Transfer",
+  "balance_label": "Balance",
+  "connect_wallet_btn": "Connect Wallet",
+  "level_strip_progress": "{count}/{req} to Golden",
+  "level_strip_golden_active": "Golden tier active — upgrade to Premium with TON",
+  "level_strip_premium_active": "Premium tier active ✦",
+  "pane_tasks_title": "Today's Challenges",
+  "pill_reviewing": "{count} under review",
+  "task_count_label": "{count} items",
+  "cat_all": "All",
+  "cat_channel": "Channel/Group",
+  "cat_bot": "Bot/Mini-app",
+  "task_empty": "No challenges available right now — new ones will show up here soon.",
+  "btn_start": "Start",
+  "btn_chek": "Chek",
+  "btn_waiting": "Waiting",
+  "pending_note": "Awaiting full payout — after {dur}h",
+  "reward_instant_later": "+{instant} instant / +{later} later",
+  "reward_coin": "+{amount} coin",
+  "badge_referral": "🔗 Referral",
+  "badge_hours": "{dur}h",
+  "pane_links_title": "What kind of ad do you want to register?",
+  "type_channel_label": "Channel / Group",
+  "type_bot_label": "Bot / Mini-app",
+  "type_video_label": "Rewarded video",
+  "soon_badge": "Soon",
+  "order_title_channel": "◈ Register a channel / group ad",
+  "order_desc_channel": "Add your link and choose how many hours a user must stay to get the full coin reward. The longer the duration, the higher the trust and member quality.",
+  "order_title_bot": "◈ Register a bot / mini-app ad",
+  "order_desc_bot": "Add your bot link, mini-app link, or even your own referral link. Since it's not possible to track how long a user stays inside a bot, coins are paid instantly right after verification.",
+  "name_placeholder_channel": "e.g. Gold Market channel",
+  "name_placeholder_bot": "e.g. Golden Quiz Bot",
+  "link_placeholder_channel": "t.me/yourchannel",
+  "link_placeholder_bot": "t.me/yourbot",
+  "link_hint_bot": "(you can also put your own referral link here)",
+  "link_hint_channel": "",
+  "label_name": "Name (this is what shows in Tasks):",
+  "label_link": "Link:",
+  "label_duration": "Required stay duration:",
+  "custom_hour_placeholder": "Custom hours (1 to 72)",
+  "dur_hint_min": "Minimum unit price for {dur}h: {price} coins",
+  "label_qty": "Number of users you want to see this ad:",
+  "qty_placeholder": "e.g. 100",
+  "label_unit_price": "Price per unit (in coins):",
+  "unit_price_placeholder": "e.g. {n}",
+  "sum_qty": "Quantity",
+  "sum_unit": "Price per unit",
+  "sum_discount": "Tier discount",
+  "sum_order_fee": "Order registration fee",
+  "sum_order_fee_free": "0 (free)",
+  "sum_total": "Final order price",
+  "suggest_text": "Based on your balance, we'll pick the best combination for you.",
+  "suggest_btn": "Suggest",
+  "btn_check_link": "Check link",
+  "btn_checking": "Checking…",
+  "btn_submit_order": "Submit order",
+  "link_not_found": "Link not found — enter a valid public link (for private channels/groups, the bot needs to be a member)",
+  "link_verified": "✓ Link verified: {title}",
+  "video_title": "🎬 Rewarded video ad",
+  "video_desc": "This ad type (a dedicated in-app ad reel with cover image, link, title and short description) is being designed. Coming soon.",
+  "video_soon_note": "In development…",
+  "video_soon_toast": "This section will be available soon",
+  "my_links_title": "My registered links",
+  "my_links_empty": "You haven't registered any orders yet — start from the form above.",
+  "wallet_title": "Wallet",
+  "history_btn": "History",
+  "wallet_balance_label": "Balance",
+  "transfer_btn": "↗ Transfer balance",
+  "store_title": "Store",
+  "spin_title": "Daily lucky spin",
+  "spin_sub": "Spin once a day for a chance at free coins",
+  "suggest_modal_title": "◈ Smart suggestion",
+  "suggest_modal_desc": "Based on your current balance ({balance} coins), here's what we'd recommend:",
+  "sug_qty_label": "Suggested quantity",
+  "sug_dur_label": "Suggested duration",
+  "sug_unit_label": "Price per unit",
+  "sug_total_label": "Total",
+  "apply_suggest_btn": "Apply to form",
+  "suggest_applied_toast": "Suggestion applied to the form ✓",
+  "order_modal_default_title": "◈ Order details",
+  "stat_filled": "Filled",
+  "stat_pending": "Pending",
+  "stat_completed": "Completed",
+  "label_boost": "Increase budget (in coins):",
+  "boost_placeholder": "e.g. 12000",
+  "boost_hint_default": "Price per unit for this order: {price} coins",
+  "boost_hint_calc_discount": "= +{units} units — cost: {cost} coins ({pct}% discount applied)",
+  "boost_hint_calc": "= +{units} units (price per unit: {price} coins)",
+  "btn_apply_boost": "Boost",
+  "show_users_btn": "👥 Show users",
+  "lock_badge": "Premium required",
+  "boost_invalid_amount": "Enter a valid amount",
+  "boost_insufficient": "Insufficient balance",
+  "boost_error": "Error: {msg}",
+  "boost_success_toast": "◈ Budget increased: +{units} units",
+  "order_users_title": "👥 Users of this order",
+  "order_users_loading": "Loading…",
+  "order_users_locked_toast": "This feature requires Premium 🔒",
+  "order_users_error": "Error fetching user data",
+  "order_users_empty": "No one has started this challenge yet.",
+  "state_opened": "Started",
+  "state_pending": "Under review",
+  "state_done": "Completed ✓",
+  "user_fallback": "User {id}",
+  "dur_hours_label": "{n}h",
+  "dur_locked_hint": "Upgrade to Golden",
+  "dur_custom_label": "Custom",
+  "dur_locked_toast": "This range unlocks at Golden tier 🔒",
+  "toast_enter_link": "Enter the link first",
+  "toast_looks_like_bot": "This link looks like a bot — use the \"Bot/Mini-app\" tab instead",
+  "toast_bot_username_must_end": "Telegram bot usernames always end with \"bot\" — enter a bot link",
+  "toast_login_required": "You need to log in first",
+  "toast_enter_name": "Enter a name first",
+  "toast_enter_qty": "Enter the number of users",
+  "toast_enter_unit_price": "Enter the price per unit",
+  "toast_bot_min_price": "Minimum unit price for bot/mini-app is {price} coins",
+  "toast_min_price_dur": "Minimum unit price for {dur}h is {price} coins",
+  "toast_insufficient_order": "Insufficient balance for this order",
+  "toast_order_created": "Order registered for {qty} users ✓",
+  "toast_generic_error": "Error: {msg}",
+  "toast_challenge_full": "This challenge is full — try another one",
+  "toast_challenge_start_error": "Error starting the challenge",
+  "toast_not_member": "You're not a member yet — join the channel/group first, then try again",
+  "toast_reward_error": "Error claiming reward",
+  "toast_reward_instant": "◈ {amount} coins credited ✓",
+  "toast_reward_partial": "◈ {amount} credited instantly — the rest after {dur}h",
+  "level_modal_title": "◈ User tiers",
+  "level_simple_name": "Simple",
+  "level_golden_name": "Golden",
+  "level_premium_name": "Premium",
+  "level_golden_req": "— with 3 successful referrals",
+  "level_premium_req": "— buy with TON or Stars",
+  "level_simple_desc": "Full access to challenges and ad order registration",
+  "level_golden_desc": "+5% coins on every completed challenge, priority listing for your own orders",
+  "level_premium_desc": "See real users of each order, no limit on concurrent orders",
+  "show_more_link": "Show more",
+  "level_you_label": "Your current tier:",
+  "perks_simple_0": "Full access to all daily challenges",
+  "perks_simple_1": "Register channel/group and bot ad orders",
+  "perks_simple_2": "3, 12, and 24-hour duration tiers for orders",
+  "perks_simple_3": "Balance transfer fee: 5% (3% after watching an ad)",
+  "perks_simple_4": "Balance transfer limit: 1 per day",
+  "perks_simple_5": "Ad order registration fee: always 0 (free)",
+  "perks_golden_0": "+5% extra coins on every completed challenge",
+  "perks_golden_1": "Unlocks the 6-hour duration tier for orders",
+  "perks_golden_2": "5% discount on ad order registration price",
+  "perks_golden_3": "Your own orders get priority placement in the challenge queue",
+  "perks_golden_4": "Golden badge 🥇 next to your name",
+  "perks_golden_5": "Balance transfer fee: 3% (1% after watching an ad)",
+  "perks_golden_6": "Balance transfer limit: 3 per day",
+  "perks_premium_0": "+12% extra coins on every completed challenge",
+  "perks_premium_1": "Choose any custom duration between 1 and 72 hours for orders",
+  "perks_premium_2": "15% discount on ad order registration price",
+  "perks_premium_3": "See the real users of each order",
+  "perks_premium_4": "No limit on the number of concurrent orders",
+  "perks_premium_5": "Balance transfer fee: always 0%",
+  "perks_premium_6": "Balance transfer: no daily limit at all",
+  "perks_premium_7": "Diamond badge 💎 next to your name",
+  "perks_premium_8": "Purple checkmark ✓ next to the name of channels/bots you register",
+  "invite_btn": "Invite {count}/{req} friends",
+  "goto_store_btn": "🛍 View and buy in the Store",
+  "transfer_modal_title": "↗ Transfer balance",
+  "label_recipient": "Recipient user ID:",
+  "recipient_placeholder": "e.g. @username or ID",
+  "label_transfer_amount": "Transfer amount (coins):",
+  "amount_placeholder": "e.g. 50000",
+  "ad_discount_default": "Watch an ad to lower your fee",
+  "ad_discount_active": "Today's discount is active — your fee is now {pct}% ✓",
+  "ad_discount_inactive": "Your fee is currently {base}% — watch an ad to bring it to {discounted}%",
+  "ad_watch_btn_default": "🎬 Watch",
+  "ad_watch_btn_playing": "Playing…",
+  "ad_watch_btn_watched": "Watched ✓",
+  "toast_ad_error": "Error — try again",
+  "toast_ad_watched": "Ad watched — fee reduced ✓",
+  "sum_amount_label": "Selected coins",
+  "sum_fee_label": "Transaction fee",
+  "sum_recipient_label": "Selected recipient",
+  "sum_final_label": "Final transfer",
+  "toast_enter_recipient": "Enter the recipient's ID",
+  "toast_enter_amount": "Enter an amount",
+  "toast_insufficient": "Insufficient balance",
+  "toast_user_not_found": "No user found with this ID",
+  "toast_cant_self_transfer": "You can't transfer to yourself",
+  "toast_user_found": "User found ✓",
+  "toast_daily_limit": "You've reached your daily transfer limit",
+  "toast_transfer_success": "◈ {amount} coins sent to {name} ✓",
+  "btn_check_user": "Chek User",
+  "btn_send": "Send",
+  "history_title": "Transfer history",
+  "history_empty": "You haven't made any transfers yet.",
+  "history_user_label": "User:",
+  "detail_title": "Transaction details",
+  "detail_date": "Date",
+  "detail_fee": "Fee",
+  "detail_amount": "Amount transferred",
+  "detail_final": "Final amount",
+  "detail_recipient_id": "Recipient ID",
+  "toast_id_copied": "ID copied",
+  "pkg_starter_title": "Starter Pack",
+  "pkg_starter_sub": "100,000 coins + blue checkmark next to your links' names",
+  "pkg_premium_title": "Premium account",
+  "pkg_premium_sub": "Activates Premium tier + purple checkmark next to your links' names",
+  "pkg_premium500k_title": "Premium + 500K coins",
+  "pkg_premium500k_sub": "Activates Premium + 500,000 bonus coins + purple checkmark next to your links' names",
+  "pkg_premium500k_ribbon": "Best value",
+  "pkg_coins900k_title": "900,000 coins",
+  "pkg_coins900k_sub": "Direct balance top-up",
+  "toast_creating_invoice": "Creating invoice…",
+  "toast_invoice_error": "Error creating invoice — try again",
+  "toast_telegram_only": "This feature only works inside Telegram",
+  "toast_confirming_payment": "Confirming payment…",
+  "toast_purchase_success": "◈ Purchase completed successfully ✓",
+  "toast_payment_cancelled": "Payment cancelled",
+  "toast_payment_failed": "Payment failed",
+  "toast_payment_unknown": "Payment status unclear — check your balance",
+  "toast_connecting_ton": "Connecting to TON wallet…",
+  "toast_ton_cancelled": "Payment cancelled or failed",
+  "toast_confirming_chain": "Confirming transaction on-chain…",
+  "spin_tier_sub_daily": "Daily free spin",
+  "spin_claim_btn": "Claim",
+  "spin_claimed_today": "Claimed today ✓",
+  "spin_claiming": "Spinning…",
+  "spin_error": "Error claiming reward",
+  "spin_already_claimed": "Already claimed today ✓",
+  "spin_won_btn": "+{amount} claimed ✓",
+  "spin_won_toast": "◈ {amount} free coins claimed ✓",
+  "spin_tier_simple": "Simple",
+  "spin_tier_golden": "Golden",
+  "spin_tier_premium": "Premium",
+  "toast_wallet_connected": "Wallet connected ✓",
+  "load_status_1": "Connecting to Telegram…",
+  "load_status_2": "Fetching account info…",
+  "load_status_3": "Preparing challenges…",
+  "load_telegram_only": "This app only works inside Telegram",
+  "toast_login_error": "Login error — please try again",
+  "toast_server_error": "Couldn't connect to the server",
+  "toast_tasks_error": "Error fetching challenges",
+  "toast_orders_error": "Error fetching your registered links",
+  "task_title_join_prefix": "Join ",
+  "task_title_try_prefix": "Try ",
+  "tick_premium_title": "Premium",
+  "tick_starter_title": "Starter Pack",
+  "dur_start_link_label": "Referral start link"
+ },
+ "ru": {
+  "nav_tasks": "Задания",
+  "nav_links": "Ссылки",
+  "nav_store": "Магазин",
+  "nav_wallet": "Перевод",
+  "balance_label": "Баланс",
+  "connect_wallet_btn": "Connect Wallet",
+  "level_strip_progress": "{count}/{req} до Golden",
+  "level_strip_golden_active": "Уровень Golden активен — улучшите до Premium через TON",
+  "level_strip_premium_active": "Уровень Premium активен ✦",
+  "pane_tasks_title": "Задания на сегодня",
+  "pill_reviewing": "{count} на проверке",
+  "task_count_label": "{count} шт.",
+  "cat_all": "Все",
+  "cat_channel": "Канал/группа",
+  "cat_bot": "Бот/мини-приложение",
+  "task_empty": "Пока нет доступных заданий — новые появятся здесь скоро.",
+  "btn_start": "Начать",
+  "btn_chek": "Chek",
+  "btn_waiting": "Ожидание",
+  "pending_note": "Ожидание полной выплаты — через {dur} ч",
+  "reward_instant_later": "+{instant} сразу / +{later} позже",
+  "reward_coin": "+{amount} coin",
+  "badge_referral": "🔗 Реферал",
+  "badge_hours": "{dur} ч",
+  "pane_links_title": "Какую рекламу вы хотите разместить?",
+  "type_channel_label": "Канал / группа",
+  "type_bot_label": "Бот / мини-приложение",
+  "type_video_label": "Видео за награду",
+  "soon_badge": "Скоро",
+  "order_title_channel": "◈ Разместить канал / группу",
+  "order_desc_channel": "Укажите ссылку и выберите, сколько часов пользователь должен оставаться, чтобы получить полную награду. Чем дольше срок, тем выше доверие и качество подписчиков.",
+  "order_title_bot": "◈ Разместить бота / мини-приложение",
+  "order_desc_bot": "Укажите ссылку на бота, мини-приложение или даже свою реферальную ссылку. Так как невозможно отследить, сколько пользователь остаётся в боте, монеты выплачиваются сразу после подтверждения.",
+  "name_placeholder_channel": "напр. канал «Золотой рынок»",
+  "name_placeholder_bot": "напр. Golden Quiz Bot",
+  "link_placeholder_channel": "t.me/yourchannel",
+  "link_placeholder_bot": "t.me/yourbot",
+  "link_hint_bot": "(можно указать и вашу реферальную ссылку)",
+  "link_hint_channel": "",
+  "label_name": "Название (отображается в заданиях):",
+  "label_link": "Ссылка:",
+  "label_duration": "Требуемая длительность подписки:",
+  "custom_hour_placeholder": "Свои часы (от 1 до 72)",
+  "dur_hint_min": "Минимальная цена за единицу для {dur} ч: {price} монет",
+  "label_qty": "Сколько пользователей должны увидеть эту рекламу:",
+  "qty_placeholder": "напр. 100",
+  "label_unit_price": "Цена за единицу (в монетах):",
+  "unit_price_placeholder": "напр. {n}",
+  "sum_qty": "Количество",
+  "sum_unit": "Цена за единицу",
+  "sum_discount": "Скидка уровня",
+  "sum_order_fee": "Комиссия за размещение",
+  "sum_order_fee_free": "0 (бесплатно)",
+  "sum_total": "Итоговая цена заказа",
+  "suggest_text": "Исходя из вашего баланса, подберём для вас лучший вариант.",
+  "suggest_btn": "Подобрать",
+  "btn_check_link": "Проверить ссылку",
+  "btn_checking": "Проверка…",
+  "btn_submit_order": "Разместить заказ",
+  "link_not_found": "Ссылка не найдена — введите корректную публичную ссылку (для приватных каналов/групп бот должен быть их участником)",
+  "link_verified": "✓ Ссылка подтверждена: {title}",
+  "video_title": "🎬 Видеореклама за награду",
+  "video_desc": "Этот тип рекламы (отдельная лента внутри приложения с обложкой, ссылкой, заголовком и коротким описанием) находится в разработке. Скоро появится.",
+  "video_soon_note": "В разработке…",
+  "video_soon_toast": "Этот раздел скоро будет доступен",
+  "my_links_title": "Мои размещённые ссылки",
+  "my_links_empty": "Вы ещё не разместили ни одного заказа — начните с формы выше.",
+  "wallet_title": "Кошелёк",
+  "history_btn": "История",
+  "wallet_balance_label": "Баланс",
+  "transfer_btn": "↗ Перевод баланса",
+  "store_title": "Магазин",
+  "spin_title": "Ежедневное колесо удачи",
+  "spin_sub": "Крутите раз в день, чтобы шанс получить бесплатные монеты",
+  "suggest_modal_title": "◈ Умный подбор",
+  "suggest_modal_desc": "Исходя из вашего текущего баланса ({balance} монет), мы подобрали для вас такой вариант:",
+  "sug_qty_label": "Рекомендуемое количество",
+  "sug_dur_label": "Рекомендуемая длительность",
+  "sug_unit_label": "Цена за единицу",
+  "sug_total_label": "Итого",
+  "apply_suggest_btn": "Применить к форме",
+  "suggest_applied_toast": "Вариант применён к форме ✓",
+  "order_modal_default_title": "◈ Детали заказа",
+  "stat_filled": "Выполнено",
+  "stat_pending": "На проверке",
+  "stat_completed": "Завершено",
+  "label_boost": "Увеличить бюджет (в монетах):",
+  "boost_placeholder": "напр. 12000",
+  "boost_hint_default": "Цена за единицу этого заказа: {price} монет",
+  "boost_hint_calc_discount": "= +{units} ед. — стоимость: {cost} монет (скидка {pct}% применена)",
+  "boost_hint_calc": "= +{units} ед. (цена за единицу: {price} монет)",
+  "btn_apply_boost": "Увеличить",
+  "show_users_btn": "👥 Показать пользователей",
+  "lock_badge": "Нужен Premium",
+  "boost_invalid_amount": "Введите корректную сумму",
+  "boost_insufficient": "Недостаточно средств",
+  "boost_error": "Ошибка: {msg}",
+  "boost_success_toast": "◈ Бюджет увеличен: +{units} ед.",
+  "order_users_title": "👥 Пользователи этого заказа",
+  "order_users_loading": "Загрузка…",
+  "order_users_locked_toast": "Эта функция требует уровень Premium 🔒",
+  "order_users_error": "Ошибка при получении данных пользователей",
+  "order_users_empty": "Пока никто не начал это задание.",
+  "state_opened": "Начато",
+  "state_pending": "На проверке",
+  "state_done": "Завершено ✓",
+  "user_fallback": "Пользователь {id}",
+  "dur_hours_label": "{n} ч",
+  "dur_locked_hint": "Повышение до Golden",
+  "dur_custom_label": "Свои",
+  "dur_locked_toast": "Этот диапазон открывается на уровне Golden 🔒",
+  "toast_enter_link": "Сначала введите ссылку",
+  "toast_looks_like_bot": "Эта ссылка похожа на бота — используйте вкладку «Бот/мини-приложение»",
+  "toast_bot_username_must_end": "Username ботов Telegram всегда заканчивается на bot — введите ссылку на бота",
+  "toast_login_required": "Сначала нужно войти",
+  "toast_enter_name": "Сначала введите название",
+  "toast_enter_qty": "Введите количество пользователей",
+  "toast_enter_unit_price": "Введите цену за единицу",
+  "toast_bot_min_price": "Минимальная цена за единицу для бота/мини-приложения — {price} монет",
+  "toast_min_price_dur": "Минимальная цена за единицу для {dur} ч — {price} монет",
+  "toast_insufficient_order": "Недостаточно средств для этого заказа",
+  "toast_order_created": "Заказ размещён для {qty} пользователей ✓",
+  "toast_generic_error": "Ошибка: {msg}",
+  "toast_challenge_full": "Это задание заполнено — попробуйте другое",
+  "toast_challenge_start_error": "Ошибка при начале задания",
+  "toast_not_member": "Вы ещё не подписаны — сначала подпишитесь на канал/группу, затем попробуйте снова",
+  "toast_reward_error": "Ошибка при получении награды",
+  "toast_reward_instant": "◈ {amount} монет зачислено ✓",
+  "toast_reward_partial": "◈ {amount} зачислено сразу — остальное через {dur} ч",
+  "level_modal_title": "◈ Уровни пользователей",
+  "level_simple_name": "Simple",
+  "level_golden_name": "Golden",
+  "level_premium_name": "Premium",
+  "level_golden_req": "— за 3 успешных реферала",
+  "level_premium_req": "— покупка за TON или Stars",
+  "level_simple_desc": "Полный доступ к заданиям и размещению рекламы",
+  "level_golden_desc": "+5% монет за каждое завершённое задание, приоритет показа ваших заказов",
+  "level_premium_desc": "Просмотр пользователей каждого заказа, без ограничения на число заказов",
+  "show_more_link": "Показать больше",
+  "level_you_label": "Ваш текущий уровень:",
+  "perks_simple_0": "Полный доступ ко всем ежедневным заданиям",
+  "perks_simple_1": "Размещение рекламы каналов/групп и ботов",
+  "perks_simple_2": "Диапазоны длительности 3, 12 и 24 часа для заказов",
+  "perks_simple_3": "Комиссия за перевод баланса: 5% (3% после просмотра рекламы)",
+  "perks_simple_4": "Лимит переводов: 1 раз в день",
+  "perks_simple_5": "Комиссия за размещение рекламы: всегда 0 (бесплатно)",
+  "perks_golden_0": "+5% дополнительных монет за каждое завершённое задание",
+  "perks_golden_1": "Открывает диапазон длительности 6 часов для заказов",
+  "perks_golden_2": "Скидка 5% на размещение рекламы",
+  "perks_golden_3": "Ваши заказы получают приоритет в очереди заданий",
+  "perks_golden_4": "Золотой значок 🥇 рядом с именем",
+  "perks_golden_5": "Комиссия за перевод баланса: 3% (1% после просмотра рекламы)",
+  "perks_golden_6": "Лимит переводов: 3 раза в день",
+  "perks_premium_0": "+12% дополнительных монет за каждое завершённое задание",
+  "perks_premium_1": "Выбор любой длительности от 1 до 72 часов для заказов",
+  "perks_premium_2": "Скидка 15% на размещение рекламы",
+  "perks_premium_3": "Просмотр реальных пользователей каждого заказа",
+  "perks_premium_4": "Без ограничения на число одновременных заказов",
+  "perks_premium_5": "Комиссия за перевод баланса: всегда 0%",
+  "perks_premium_6": "Перевод баланса: без каких-либо дневных лимитов",
+  "perks_premium_7": "Значок бриллианта 💎 рядом с именем",
+  "perks_premium_8": "Фиолетовая галочка ✓ рядом с именем размещаемых каналов/ботов",
+  "invite_btn": "Пригласить {count}/{req} друзей",
+  "goto_store_btn": "🛍 Смотреть и купить в магазине",
+  "transfer_modal_title": "↗ Перевод баланса",
+  "label_recipient": "ID получателя:",
+  "recipient_placeholder": "напр. @username или ID",
+  "label_transfer_amount": "Сумма перевода (монеты):",
+  "amount_placeholder": "напр. 50000",
+  "ad_discount_default": "Посмотрите рекламу, чтобы снизить комиссию",
+  "ad_discount_active": "Сегодняшняя скидка активна — ваша комиссия теперь {pct}% ✓",
+  "ad_discount_inactive": "Сейчас ваша комиссия {base}% — после просмотра рекламы станет {discounted}%",
+  "ad_watch_btn_default": "🎬 Смотреть",
+  "ad_watch_btn_playing": "Идёт показ…",
+  "ad_watch_btn_watched": "Просмотрено ✓",
+  "toast_ad_error": "Ошибка — попробуйте снова",
+  "toast_ad_watched": "Реклама просмотрена — комиссия снижена ✓",
+  "sum_amount_label": "Выбрано монет",
+  "sum_fee_label": "Комиссия",
+  "sum_recipient_label": "Выбранный получатель",
+  "sum_final_label": "Итоговый перевод",
+  "toast_enter_recipient": "Введите ID получателя",
+  "toast_enter_amount": "Введите сумму",
+  "toast_insufficient": "Недостаточно средств",
+  "toast_user_not_found": "Пользователь с таким ID не найден",
+  "toast_cant_self_transfer": "Нельзя перевести самому себе",
+  "toast_user_found": "Пользователь найден ✓",
+  "toast_daily_limit": "Вы достигли дневного лимита переводов",
+  "toast_transfer_success": "◈ {amount} монет отправлено {name} ✓",
+  "btn_check_user": "Chek User",
+  "btn_send": "Send",
+  "history_title": "История переводов",
+  "history_empty": "У вас ещё нет переводов.",
+  "history_user_label": "Пользователь:",
+  "detail_title": "Детали транзакции",
+  "detail_date": "Дата",
+  "detail_fee": "Комиссия",
+  "detail_amount": "Сумма перевода",
+  "detail_final": "Итоговая сумма",
+  "detail_recipient_id": "ID получателя",
+  "toast_id_copied": "ID скопирован",
+  "pkg_starter_title": "Starter Pack",
+  "pkg_starter_sub": "100 000 монет + синяя галочка рядом с именами ваших ссылок",
+  "pkg_premium_title": "Premium аккаунт",
+  "pkg_premium_sub": "Активирует уровень Premium + фиолетовая галочка рядом с именами ваших ссылок",
+  "pkg_premium500k_title": "Premium + 500K монет",
+  "pkg_premium500k_sub": "Активирует Premium + 500 000 бонусных монет + фиолетовая галочка рядом с именами ваших ссылок",
+  "pkg_premium500k_ribbon": "Лучшая цена",
+  "pkg_coins900k_title": "900 000 монет",
+  "pkg_coins900k_sub": "Прямое пополнение баланса",
+  "toast_creating_invoice": "Создание счёта…",
+  "toast_invoice_error": "Ошибка при создании счёта — попробуйте снова",
+  "toast_telegram_only": "Эта функция работает только внутри Telegram",
+  "toast_confirming_payment": "Подтверждение оплаты…",
+  "toast_purchase_success": "◈ Покупка успешно завершена ✓",
+  "toast_payment_cancelled": "Оплата отменена",
+  "toast_payment_failed": "Оплата не удалась",
+  "toast_payment_unknown": "Статус оплаты неясен — проверьте баланс",
+  "toast_connecting_ton": "Подключение к TON-кошельку…",
+  "toast_ton_cancelled": "Оплата отменена или не удалась",
+  "toast_confirming_chain": "Подтверждение транзакции в блокчейне…",
+  "spin_tier_sub_daily": "Ежедневный бесплатный спин",
+  "spin_claim_btn": "Claim",
+  "spin_claimed_today": "Уже получено сегодня ✓",
+  "spin_claiming": "Крутится…",
+  "spin_error": "Ошибка при получении награды",
+  "spin_already_claimed": "Уже получено сегодня ✓",
+  "spin_won_btn": "+{amount} получено ✓",
+  "spin_won_toast": "◈ {amount} бесплатных монет получено ✓",
+  "spin_tier_simple": "Simple",
+  "spin_tier_golden": "Golden",
+  "spin_tier_premium": "Premium",
+  "toast_wallet_connected": "Кошелёк подключён ✓",
+  "load_status_1": "Подключение к Telegram…",
+  "load_status_2": "Получение данных аккаунта…",
+  "load_status_3": "Подготовка заданий…",
+  "load_telegram_only": "Это приложение работает только внутри Telegram",
+  "toast_login_error": "Ошибка входа — попробуйте снова",
+  "toast_server_error": "Не удалось подключиться к серверу",
+  "toast_tasks_error": "Ошибка при получении заданий",
+  "toast_orders_error": "Ошибка при получении ваших ссылок",
+  "task_title_join_prefix": "Подписка на ",
+  "task_title_try_prefix": "Попробовать ",
+  "tick_premium_title": "Premium",
+  "tick_starter_title": "Starter Pack",
+  "dur_start_link_label": "Стартовая ссылка"
+ },
+ "de": {
+  "nav_tasks": "Aufgaben",
+  "nav_links": "Links",
+  "nav_store": "Shop",
+  "nav_wallet": "Überweisung",
+  "balance_label": "Guthaben",
+  "connect_wallet_btn": "Connect Wallet",
+  "level_strip_progress": "{count}/{req} bis Golden",
+  "level_strip_golden_active": "Golden-Stufe aktiv — mit TON auf Premium upgraden",
+  "level_strip_premium_active": "Premium-Stufe aktiv ✦",
+  "pane_tasks_title": "Heutige Aufgaben",
+  "pill_reviewing": "{count} in Prüfung",
+  "task_count_label": "{count} Stück",
+  "cat_all": "Alle",
+  "cat_channel": "Kanal/Gruppe",
+  "cat_bot": "Bot/Mini-App",
+  "task_empty": "Aktuell sind keine Aufgaben verfügbar — neue erscheinen bald hier.",
+  "btn_start": "Start",
+  "btn_chek": "Chek",
+  "btn_waiting": "Wartet",
+  "pending_note": "Wartet auf vollständige Auszahlung — nach {dur} Std.",
+  "reward_instant_later": "+{instant} sofort / +{later} später",
+  "reward_coin": "+{amount} coin",
+  "badge_referral": "🔗 Empfehlung",
+  "badge_hours": "{dur} Std.",
+  "pane_links_title": "Welche Art von Werbung möchtest du registrieren?",
+  "type_channel_label": "Kanal / Gruppe",
+  "type_bot_label": "Bot / Mini-App",
+  "type_video_label": "Belohnungsvideo",
+  "soon_badge": "Bald",
+  "order_title_channel": "◈ Kanal-/Gruppen-Werbung registrieren",
+  "order_desc_channel": "Gib deinen Link ein und wähle, wie viele Stunden ein Nutzer bleiben muss, um die volle Belohnung zu erhalten. Je länger die Dauer, desto höher Vertrauen und Mitgliederqualität.",
+  "order_title_bot": "◈ Bot-/Mini-App-Werbung registrieren",
+  "order_desc_bot": "Gib deinen Bot-Link, Mini-App-Link oder sogar deinen eigenen Empfehlungslink ein. Da nicht nachvollziehbar ist, wie lange ein Nutzer im Bot bleibt, werden die Coins sofort nach Bestätigung ausgezahlt.",
+  "name_placeholder_channel": "z. B. Gold-Markt-Kanal",
+  "name_placeholder_bot": "z. B. Golden Quiz Bot",
+  "link_placeholder_channel": "t.me/yourchannel",
+  "link_placeholder_bot": "t.me/yourbot",
+  "link_hint_bot": "(du kannst hier auch deinen eigenen Empfehlungslink angeben)",
+  "link_hint_channel": "",
+  "label_name": "Name (wird in den Aufgaben angezeigt):",
+  "label_link": "Link:",
+  "label_duration": "Erforderliche Verweildauer:",
+  "custom_hour_placeholder": "Eigene Stunden (1 bis 72)",
+  "dur_hint_min": "Mindestpreis pro Einheit für {dur} Std.: {price} Coins",
+  "label_qty": "Anzahl der Nutzer, die diese Werbung sehen sollen:",
+  "qty_placeholder": "z. B. 100",
+  "label_unit_price": "Preis pro Einheit (in Coins):",
+  "unit_price_placeholder": "z. B. {n}",
+  "sum_qty": "Anzahl",
+  "sum_unit": "Preis pro Einheit",
+  "sum_discount": "Stufenrabatt",
+  "sum_order_fee": "Registrierungsgebühr",
+  "sum_order_fee_free": "0 (kostenlos)",
+  "sum_total": "Endpreis der Bestellung",
+  "suggest_text": "Basierend auf deinem Guthaben schlagen wir dir die beste Kombination vor.",
+  "suggest_btn": "Vorschlag",
+  "btn_check_link": "Link prüfen",
+  "btn_checking": "Wird geprüft…",
+  "btn_submit_order": "Bestellung aufgeben",
+  "link_not_found": "Link nicht gefunden — gib einen gültigen öffentlichen Link ein (bei privaten Kanälen/Gruppen muss der Bot Mitglied sein)",
+  "link_verified": "✓ Link bestätigt: {title}",
+  "video_title": "🎬 Belohnungsvideo-Werbung",
+  "video_desc": "Dieser Werbetyp (ein eigener In-App-Ad-Reel mit Titelbild, Link, Titel und kurzer Beschreibung) wird gerade entwickelt. Bald verfügbar.",
+  "video_soon_note": "In Entwicklung…",
+  "video_soon_toast": "Dieser Bereich ist bald verfügbar",
+  "my_links_title": "Meine registrierten Links",
+  "my_links_empty": "Du hast noch keine Bestellung aufgegeben — starte mit dem Formular oben.",
+  "wallet_title": "Wallet",
+  "history_btn": "Verlauf",
+  "wallet_balance_label": "Guthaben",
+  "transfer_btn": "↗ Guthaben überweisen",
+  "store_title": "Shop",
+  "spin_title": "Tägliches Glücksrad",
+  "spin_sub": "Einmal täglich drehen für die Chance auf kostenlose Coins",
+  "suggest_modal_title": "◈ Intelligenter Vorschlag",
+  "suggest_modal_desc": "Basierend auf deinem aktuellen Guthaben ({balance} Coins) empfehlen wir dir Folgendes:",
+  "sug_qty_label": "Vorgeschlagene Anzahl",
+  "sug_dur_label": "Vorgeschlagene Dauer",
+  "sug_unit_label": "Preis pro Einheit",
+  "sug_total_label": "Gesamt",
+  "apply_suggest_btn": "Auf Formular anwenden",
+  "suggest_applied_toast": "Vorschlag auf das Formular angewendet ✓",
+  "order_modal_default_title": "◈ Bestelldetails",
+  "stat_filled": "Erfüllt",
+  "stat_pending": "In Prüfung",
+  "stat_completed": "Abgeschlossen",
+  "label_boost": "Budget erhöhen (in Coins):",
+  "boost_placeholder": "z. B. 12000",
+  "boost_hint_default": "Preis pro Einheit dieser Bestellung: {price} Coins",
+  "boost_hint_calc_discount": "= +{units} Einheiten — Kosten: {cost} Coins ({pct}% Rabatt angewendet)",
+  "boost_hint_calc": "= +{units} Einheiten (Preis pro Einheit: {price} Coins)",
+  "btn_apply_boost": "Erhöhen",
+  "show_users_btn": "👥 Nutzer anzeigen",
+  "lock_badge": "Premium erforderlich",
+  "boost_invalid_amount": "Gib einen gültigen Betrag ein",
+  "boost_insufficient": "Guthaben reicht nicht aus",
+  "boost_error": "Fehler: {msg}",
+  "boost_success_toast": "◈ Budget erhöht: +{units} Einheiten",
+  "order_users_title": "👥 Nutzer dieser Bestellung",
+  "order_users_loading": "Wird geladen…",
+  "order_users_locked_toast": "Diese Funktion erfordert Premium 🔒",
+  "order_users_error": "Fehler beim Abrufen der Nutzerdaten",
+  "order_users_empty": "Noch niemand hat diese Aufgabe begonnen.",
+  "state_opened": "Gestartet",
+  "state_pending": "In Prüfung",
+  "state_done": "Abgeschlossen ✓",
+  "user_fallback": "Nutzer {id}",
+  "dur_hours_label": "{n} Std.",
+  "dur_locked_hint": "Upgrade auf Golden",
+  "dur_custom_label": "Eigene",
+  "dur_locked_toast": "Dieser Bereich wird ab der Golden-Stufe freigeschaltet 🔒",
+  "toast_enter_link": "Gib zuerst den Link ein",
+  "toast_looks_like_bot": "Dieser Link sieht aus wie ein Bot — nutze den Tab „Bot/Mini-App“",
+  "toast_bot_username_must_end": "Telegram-Bot-Benutzernamen enden immer auf „bot“ — gib einen Bot-Link ein",
+  "toast_login_required": "Du musst dich zuerst anmelden",
+  "toast_enter_name": "Gib zuerst einen Namen ein",
+  "toast_enter_qty": "Gib die Anzahl der Nutzer ein",
+  "toast_enter_unit_price": "Gib den Preis pro Einheit ein",
+  "toast_bot_min_price": "Der Mindestpreis pro Einheit für Bot/Mini-App beträgt {price} Coins",
+  "toast_min_price_dur": "Der Mindestpreis pro Einheit für {dur} Std. beträgt {price} Coins",
+  "toast_insufficient_order": "Guthaben reicht für diese Bestellung nicht aus",
+  "toast_order_created": "Bestellung für {qty} Nutzer aufgegeben ✓",
+  "toast_generic_error": "Fehler: {msg}",
+  "toast_challenge_full": "Diese Aufgabe ist voll — versuch eine andere",
+  "toast_challenge_start_error": "Fehler beim Starten der Aufgabe",
+  "toast_not_member": "Du bist noch kein Mitglied — tritt zuerst dem Kanal/der Gruppe bei und versuch es erneut",
+  "toast_reward_error": "Fehler beim Einlösen der Belohnung",
+  "toast_reward_instant": "◈ {amount} Coins gutgeschrieben ✓",
+  "toast_reward_partial": "◈ {amount} sofort gutgeschrieben — der Rest nach {dur} Std.",
+  "level_modal_title": "◈ Nutzerstufen",
+  "level_simple_name": "Simple",
+  "level_golden_name": "Golden",
+  "level_premium_name": "Premium",
+  "level_golden_req": "— mit 3 erfolgreichen Empfehlungen",
+  "level_premium_req": "— Kauf mit TON oder Stars",
+  "level_simple_desc": "Voller Zugriff auf Aufgaben und Werbebestellungen",
+  "level_golden_desc": "+5% Coins bei jeder abgeschlossenen Aufgabe, priorisierte Anzeige deiner eigenen Bestellungen",
+  "level_premium_desc": "Nutzer jeder Bestellung einsehen, keine Begrenzung gleichzeitiger Bestellungen",
+  "show_more_link": "Mehr anzeigen",
+  "level_you_label": "Deine aktuelle Stufe:",
+  "perks_simple_0": "Voller Zugriff auf alle täglichen Aufgaben",
+  "perks_simple_1": "Werbebestellungen für Kanal/Gruppe und Bot aufgeben",
+  "perks_simple_2": "3-, 12- und 24-Stunden-Laufzeiten für Bestellungen",
+  "perks_simple_3": "Überweisungsgebühr: 5% (3% nach Ansehen einer Werbung)",
+  "perks_simple_4": "Überweisungslimit: 1× pro Tag",
+  "perks_simple_5": "Registrierungsgebühr für Werbebestellungen: immer 0 (kostenlos)",
+  "perks_golden_0": "+5% zusätzliche Coins bei jeder abgeschlossenen Aufgabe",
+  "perks_golden_1": "Schaltet die 6-Stunden-Laufzeit für Bestellungen frei",
+  "perks_golden_2": "5% Rabatt auf den Preis für Werbebestellungen",
+  "perks_golden_3": "Deine eigenen Bestellungen werden in der Aufgabenliste priorisiert angezeigt",
+  "perks_golden_4": "Goldenes Abzeichen 🥇 neben deinem Namen",
+  "perks_golden_5": "Überweisungsgebühr: 3% (1% nach Ansehen einer Werbung)",
+  "perks_golden_6": "Überweisungslimit: 3× pro Tag",
+  "perks_premium_0": "+12% zusätzliche Coins bei jeder abgeschlossenen Aufgabe",
+  "perks_premium_1": "Beliebige Laufzeit zwischen 1 und 72 Stunden für Bestellungen wählbar",
+  "perks_premium_2": "15% Rabatt auf den Preis für Werbebestellungen",
+  "perks_premium_3": "Echte Nutzer jeder Bestellung einsehen",
+  "perks_premium_4": "Keine Begrenzung der Anzahl gleichzeitiger Bestellungen",
+  "perks_premium_5": "Überweisungsgebühr: immer 0%",
+  "perks_premium_6": "Überweisung: ohne jegliches Tageslimit",
+  "perks_premium_7": "Diamant-Abzeichen 💎 neben deinem Namen",
+  "perks_premium_8": "Lila Häkchen ✓ neben dem Namen der von dir registrierten Kanäle/Bots",
+  "invite_btn": "{count}/{req} Freunde einladen",
+  "goto_store_btn": "🛍 Im Shop ansehen und kaufen",
+  "transfer_modal_title": "↗ Guthaben überweisen",
+  "label_recipient": "Empfänger-ID:",
+  "recipient_placeholder": "z. B. @username oder ID",
+  "label_transfer_amount": "Überweisungsbetrag (Coins):",
+  "amount_placeholder": "z. B. 50000",
+  "ad_discount_default": "Sieh dir eine Werbung an, um deine Gebühr zu senken",
+  "ad_discount_active": "Der heutige Rabatt ist aktiv — deine Gebühr beträgt jetzt {pct}% ✓",
+  "ad_discount_inactive": "Deine Gebühr beträgt derzeit {base}% — nach einer Werbung sinkt sie auf {discounted}%",
+  "ad_watch_btn_default": "🎬 Ansehen",
+  "ad_watch_btn_playing": "Wird abgespielt…",
+  "ad_watch_btn_watched": "Angesehen ✓",
+  "toast_ad_error": "Fehler — versuch es erneut",
+  "toast_ad_watched": "Werbung angesehen — Gebühr gesenkt ✓",
+  "sum_amount_label": "Ausgewählte Coins",
+  "sum_fee_label": "Transaktionsgebühr",
+  "sum_recipient_label": "Ausgewählter Empfänger",
+  "sum_final_label": "Endbetrag der Überweisung",
+  "toast_enter_recipient": "Gib die Empfänger-ID ein",
+  "toast_enter_amount": "Gib einen Betrag ein",
+  "toast_insufficient": "Guthaben reicht nicht aus",
+  "toast_user_not_found": "Kein Nutzer mit dieser ID gefunden",
+  "toast_cant_self_transfer": "Du kannst nicht an dich selbst überweisen",
+  "toast_user_found": "Nutzer gefunden ✓",
+  "toast_daily_limit": "Du hast dein tägliches Überweisungslimit erreicht",
+  "toast_transfer_success": "◈ {amount} Coins an {name} gesendet ✓",
+  "btn_check_user": "Chek User",
+  "btn_send": "Send",
+  "history_title": "Überweisungsverlauf",
+  "history_empty": "Du hast noch keine Überweisungen getätigt.",
+  "history_user_label": "Nutzer:",
+  "detail_title": "Transaktionsdetails",
+  "detail_date": "Datum",
+  "detail_fee": "Gebühr",
+  "detail_amount": "Überwiesener Betrag",
+  "detail_final": "Endbetrag",
+  "detail_recipient_id": "Empfänger-ID",
+  "toast_id_copied": "ID kopiert",
+  "pkg_starter_title": "Starter-Paket",
+  "pkg_starter_sub": "100.000 Coins + blaues Häkchen neben den Namen deiner Links",
+  "pkg_premium_title": "Premium-Konto",
+  "pkg_premium_sub": "Aktiviert die Premium-Stufe + lila Häkchen neben den Namen deiner Links",
+  "pkg_premium500k_title": "Premium + 500K Coins",
+  "pkg_premium500k_sub": "Aktiviert Premium + 500.000 Bonus-Coins + lila Häkchen neben den Namen deiner Links",
+  "pkg_premium500k_ribbon": "Bester Wert",
+  "pkg_coins900k_title": "900.000 Coins",
+  "pkg_coins900k_sub": "Direktes Guthaben-Aufladen",
+  "toast_creating_invoice": "Rechnung wird erstellt…",
+  "toast_invoice_error": "Fehler beim Erstellen der Rechnung — versuch es erneut",
+  "toast_telegram_only": "Diese Funktion funktioniert nur innerhalb von Telegram",
+  "toast_confirming_payment": "Zahlung wird bestätigt…",
+  "toast_purchase_success": "◈ Kauf erfolgreich abgeschlossen ✓",
+  "toast_payment_cancelled": "Zahlung abgebrochen",
+  "toast_payment_failed": "Zahlung fehlgeschlagen",
+  "toast_payment_unknown": "Zahlungsstatus unklar — prüfe dein Guthaben",
+  "toast_connecting_ton": "Verbindung zur TON-Wallet wird hergestellt…",
+  "toast_ton_cancelled": "Zahlung abgebrochen oder fehlgeschlagen",
+  "toast_confirming_chain": "Transaktion wird auf der Blockchain bestätigt…",
+  "spin_tier_sub_daily": "Täglicher kostenloser Dreh",
+  "spin_claim_btn": "Claim",
+  "spin_claimed_today": "Heute schon abgeholt ✓",
+  "spin_claiming": "Dreht sich…",
+  "spin_error": "Fehler beim Einlösen der Belohnung",
+  "spin_already_claimed": "Heute bereits abgeholt ✓",
+  "spin_won_btn": "+{amount} erhalten ✓",
+  "spin_won_toast": "◈ {amount} kostenlose Coins erhalten ✓",
+  "spin_tier_simple": "Simple",
+  "spin_tier_golden": "Golden",
+  "spin_tier_premium": "Premium",
+  "toast_wallet_connected": "Wallet verbunden ✓",
+  "load_status_1": "Verbindung mit Telegram…",
+  "load_status_2": "Kontodaten werden abgerufen…",
+  "load_status_3": "Aufgaben werden vorbereitet…",
+  "load_telegram_only": "Diese App funktioniert nur innerhalb von Telegram",
+  "toast_login_error": "Anmeldefehler — bitte erneut versuchen",
+  "toast_server_error": "Verbindung zum Server fehlgeschlagen",
+  "toast_tasks_error": "Fehler beim Abrufen der Aufgaben",
+  "toast_orders_error": "Fehler beim Abrufen deiner registrierten Links",
+  "task_title_join_prefix": "Beitreten zu ",
+  "task_title_try_prefix": "Testen ",
+  "tick_premium_title": "Premium",
+  "tick_starter_title": "Starter-Paket",
+  "dur_start_link_label": "Start-Link"
+ }
+};
+  const LANG_KEY='adszero_lang';
+  const RTL_LANGS=['fa'];
+  let currentLang = localStorage.getItem(LANG_KEY) || 'fa';
+  const LANG_CODE={fa:'فا', en:'EN', ru:'RU', de:'DE'};
+  const LOCALE_MAP={fa:'fa-IR', en:'en-US', ru:'ru-RU', de:'de-DE'};
+
+  function T(key, vars){
+    let str = (I18N[currentLang] && I18N[currentLang][key]) !== undefined ? I18N[currentLang][key] : (I18N.fa[key] !== undefined ? I18N.fa[key] : key);
+    if(vars){ Object.keys(vars).forEach(k=>{ str = str.split('{'+k+'}').join(vars[k]); }); }
+    return str;
+  }
+
+  function applyStaticTranslations(){
+    document.documentElement.lang = currentLang;
+    document.documentElement.dir = RTL_LANGS.includes(currentLang) ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      el.textContent = T(el.getAttribute('data-i18n'));
+    });
+    document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+      el.placeholder = T(el.getAttribute('data-i18n-ph'));
+    });
+    document.querySelectorAll('.lang-option').forEach(o=>{
+      o.classList.toggle('active', o.dataset.lang===currentLang);
+    });
+    const btn=document.getElementById('langSwitchBtn');
+    if(btn) btn.innerHTML = '🌐 ' + LANG_CODE[currentLang];
+  }
+
+  function setLanguage(lang){
+    if(!I18N[lang]) return;
+    currentLang = lang;
+    try{ localStorage.setItem(LANG_KEY, lang); }catch(e){}
+    applyStaticTranslations();
+    if(typeof renderTasks==='function') renderTasks();
+    if(typeof updateTopPill==='function') updateTopPill();
+    if(typeof updateLevelUI==='function') updateLevelUI();
+    if(typeof renderMyLinks==='function') renderMyLinks();
+    if(typeof renderDurOptions==='function') renderDurOptions();
+    if(typeof refreshDurHint==='function') refreshDurHint();
+    if(typeof refreshSummary==='function') refreshSummary();
+    if(typeof renderStorePackages==='function') renderStorePackages();
+    if(typeof renderHistory==='function') renderHistory();
+    if(typeof refreshAdDiscountRow==='function') refreshAdDiscountRow();
+    if(typeof refreshTransferSummary==='function') refreshTransferSummary();
+    if(typeof selectType==='function') selectType(selectedType);
+  }
+
+
   // ===== Telegram WebApp init =====
   const tg = window.Telegram?.WebApp;
   let currentUser = null; // filled in by loginWithTelegram() once verify-init responds
@@ -815,10 +1858,13 @@
   }
 
   // ===== loading screen: cycles a status line while login/data load, fades out once ready =====
-  const LOAD_STATUS_STEPS = ["در حال اتصال به تلگرام…", "در حال گرفتن اطلاعات حساب…", "در حال آماده‌سازی چالش‌ها…"];
+  function getLoadStatusSteps(){ return [T('load_status_1'), T('load_status_2'), T('load_status_3')]; }
+  let LOAD_STATUS_STEPS = getLoadStatusSteps();
   let loadStatusIndex = 0;
   const loadStatusEl = document.getElementById('loadStatusText');
+  loadStatusEl.textContent = LOAD_STATUS_STEPS[0];
   const loadStatusInterval = setInterval(()=>{
+    LOAD_STATUS_STEPS = getLoadStatusSteps();
     loadStatusIndex = (loadStatusIndex+1) % LOAD_STATUS_STEPS.length;
     loadStatusEl.style.opacity = 0;
     setTimeout(()=>{ loadStatusEl.textContent = LOAD_STATUS_STEPS[loadStatusIndex]; loadStatusEl.style.opacity = 1; }, 250);
@@ -838,13 +1884,13 @@
   async function loadTasks(){
     if(!currentUser?.id) return;
     const { data, error } = await sb.rpc('get_my_tasks', { p_user_id: currentUser.id });
-    if(error){ showToast('خطا در گرفتن چالش‌ها'); return; }
+    if(error){ showToast(T('toast_tasks_error')); return; }
     tasks.length=0;
     (data||[]).forEach(row=>{
       tasks.push({
         id: row.order_id,
         icon: row.ad_type==='channel' ? '📢' : '🤖',
-        title: (row.ad_type==='channel' ? 'عضویت در ' : 'امتحان ') + truncateName(row.name),
+        title: (row.ad_type==='channel' ? T('task_title_join_prefix') : T('task_title_try_prefix')) + truncateName(row.name),
         reward: row.unit_price,
         dur: row.duration_hours,
         instantPay: row.instant_pay,
@@ -864,7 +1910,7 @@
   async function loadMyOrders(){
     if(!currentUser?.id) return;
     const { data, error } = await sb.rpc('get_my_orders', { p_user_id: currentUser.id });
-    if(error){ showToast('خطا در گرفتن لینک‌های ثبت‌شده'); return; }
+    if(error){ showToast(T('toast_orders_error')); return; }
     myOrders.length=0;
     (data||[]).forEach(row=>{
       myOrders.push({
@@ -878,7 +1924,7 @@
 
   async function loginWithTelegram(){
     if(!tg || !tg.initData){
-      showToast('این اپ فقط داخل تلگرام درست کار می‌کنه');
+      showToast(T('load_telegram_only'));
       hideLoadingScreen();
       return;
     }
@@ -887,7 +1933,7 @@
         body: { initData: tg.initData }
       });
       if(error || !data?.user){
-        showToast('خطا در ورود — لطفاً دوباره امتحان کن');
+        showToast(T('toast_login_error'));
         hideLoadingScreen();
         return;
       }
@@ -904,29 +1950,25 @@
       await loadMyOrders();
       hideLoadingScreen(); // دیتای واقعی گرفته و رندر شد — الان لودینگ رو نرم ببند
     } catch(e){
-      showToast('اتصال به سرور برقرار نشد');
+      showToast(T('toast_server_error'));
       hideLoadingScreen();
     }
   }
 
-  // ===== language switcher (UI control only — no translations wired up yet) =====
+  // ===== language switcher =====
   const langSwitch=document.getElementById('langSwitch');
   const langSwitchBtn=document.getElementById('langSwitchBtn'), langDropdown=document.getElementById('langDropdown');
   langSwitchBtn.addEventListener('click',()=>langDropdown.classList.toggle('show'));
   document.querySelectorAll('.lang-option').forEach(opt=>{
     opt.addEventListener('click',()=>{
-      document.querySelectorAll('.lang-option').forEach(o=>o.classList.remove('active'));
-      opt.classList.add('active');
-      langSwitchBtn.innerHTML=`🌐 ${opt.dataset.code}`;
       langDropdown.classList.remove('show');
-      if(opt.dataset.lang!=='fa'){
-        showToast('ترجمه‌ی این زبان هنوز آماده نیست — به‌زودی اضافه میشه');
-      }
+      if(opt.dataset.lang!==currentLang) setLanguage(opt.dataset.lang);
     });
   });
   document.addEventListener('click',(e)=>{
     if(!langSwitch.contains(e.target)) langDropdown.classList.remove('show');
   });
+  applyStaticTranslations();
 
   // ===== task data (fetched from Supabase — see loadTasks() near the bottom) =====
   const tasks=[];
@@ -948,10 +1990,10 @@
     const p=pendingCount();
     if(p>0){
       pillEl.classList.add('reviewing');
-      pillText.innerHTML=`<span class="dot"></span>${p} چالش در حال بررسی`;
+      pillText.innerHTML=`<span class="dot"></span>${T('pill_reviewing',{count:fmt(p)})}`;
     } else {
       pillEl.classList.remove('reviewing');
-      pillText.textContent='۰ چالش در حال بررسی';
+      pillText.textContent=T('pill_reviewing',{count:0});
     }
   }
 
@@ -963,8 +2005,8 @@
   // verification ticks shown next to a user's registered channel/bot names — from store purchases
   let hasBlueTick=false, hasPurpleTick=false;
   function tickBadgeHtml(blue, purple){
-    if(purple) return `<span class="name-tick purple" title="پرمیوم">✓</span>`;
-    if(blue) return `<span class="name-tick blue" title="استارتر پک">✓</span>`;
+    if(purple) return `<span class="name-tick purple" title="${T('tick_premium_title')}">✓</span>`;
+    if(blue) return `<span class="name-tick blue" title="${T('tick_starter_title')}">✓</span>`;
     return '';
   }
   function nameBadgeHtml(){ return tickBadgeHtml(hasBlueTick, hasPurpleTick); } // for the user's own listings
@@ -998,15 +2040,15 @@
       const pct=Math.min(100,(referralCount/GOLDEN_REQ)*100);
       levelStripFill.style.width=pct+'%';
       levelStripFill.className='level-strip-fill';
-      levelStripText.textContent=`${referralCount}/${GOLDEN_REQ} تا سطح گلدن`;
+      levelStripText.textContent=T('level_strip_progress',{count:referralCount, req:GOLDEN_REQ});
     } else if(userLevel==='golden'){
       levelStripFill.style.width='100%';
       levelStripFill.className='level-strip-fill golden';
-      levelStripText.textContent='سطح گلدن فعاله — برای پرمیوم با TON ارتقا بده';
+      levelStripText.textContent=T('level_strip_golden_active');
     } else {
       levelStripFill.style.width='100%';
       levelStripFill.className='level-strip-fill premium';
-      levelStripText.textContent='سطح پرمیوم فعاله ✦';
+      levelStripText.textContent=T('level_strip_premium_active');
     }
     if(typeof renderDurOptions==='function') renderDurOptions();
     if(typeof refreshStoreOwnership==='function') refreshStoreOwnership();
@@ -1061,9 +2103,9 @@
 
     listEl.innerHTML='';
     const currentList = sortedTasks();
-    taskCountLabel.textContent = currentList.length + ' مورد';
+    taskCountLabel.textContent = T('task_count_label',{count:fmt(currentList.length)});
     if(currentList.length===0){
-      listEl.innerHTML='<div class="empty-hint">فعلاً چالشی موجود نیست — به‌زودی سفارش‌های جدید اینجا نمایش داده میشن.</div>';
+      listEl.innerHTML='<div class="empty-hint">'+T('task_empty')+'</div>';
     }
     currentList.forEach(t=>{
       const el=document.createElement('div');
@@ -1072,12 +2114,12 @@
 
       let btnHtml, noteHtml='';
       if(t.state==='todo'){
-        btnHtml=`<button class="btn" data-id="${t.id}" data-action="open">شروع</button>`;
+        btnHtml=`<button class="btn" data-id="${t.id}" data-action="open">${T('btn_start')}</button>`;
       } else if(t.state==='opened'){
-        btnHtml=`<button class="btn chek" data-id="${t.id}" data-action="chek">Chek</button>`;
+        btnHtml=`<button class="btn chek" data-id="${t.id}" data-action="chek">${T('btn_chek')}</button>`;
       } else if(t.state==='pending'){
-        btnHtml=`<button class="btn wait">در انتظار</button>`;
-        noteHtml=`<div class="pending-note">در انتظار پرداخت کامل — بعد از اتمام ${t.dur} ساعت</div>`;
+        btnHtml=`<button class="btn wait">${T('btn_waiting')}</button>`;
+        noteHtml=`<div class="pending-note">${T('pending_note',{dur:t.dur})}</div>`;
       } else {
         btnHtml=`<button class="btn done">✓</button>`;
       }
@@ -1085,14 +2127,14 @@
       const boosted = (t.state==='pending'||t.state==='done') ? t.boostedTotal : boostedReward(t.reward);
       let rewardLabel, badgeHtml;
       if(t.instantPay){
-        rewardLabel = `+${fmt(boosted)} coin`;
-        badgeHtml = `<span class="badge-dur d-ref">🔗 رفرال</span>`;
+        rewardLabel = T('reward_coin',{amount:fmt(boosted)});
+        badgeHtml = `<span class="badge-dur d-ref">${T('badge_referral')}</span>`;
       } else {
         const instant = (t.state==='pending'||t.state==='done') ? t.instantPaid : Math.round(boosted/3);
         rewardLabel = t.state==='pending' || t.state==='done'
-          ? `+${fmt(instant)} فوری / +${fmt(boosted-instant)} بعداً`
-          : `+${fmt(boosted)} coin`;
-        badgeHtml = `<span class="badge-dur ${durClass(t.dur)}">${t.dur} ساعت</span>`;
+          ? T('reward_instant_later',{instant:fmt(instant), later:fmt(boosted-instant)})
+          : T('reward_coin',{amount:fmt(boosted)});
+        badgeHtml = `<span class="badge-dur ${durClass(t.dur)}">${T('badge_hours',{dur:t.dur})}</span>`;
       }
 
       el.innerHTML=`<div class="icon">${t.icon}</div>
@@ -1139,7 +2181,7 @@
 
   async function onTaskAction(e){
     const id=+e.currentTarget.dataset.id, action=e.currentTarget.dataset.action, t=tasks.find(x=>x.id===id);
-    if(!currentUser?.id){ showToast('اول باید وارد بشی'); return; }
+    if(!currentUser?.id){ showToast(T('toast_login_required')); return; }
     const btn=e.currentTarget;
     btn.disabled=true;
 
@@ -1148,10 +2190,10 @@
       btn.disabled=false;
       if(error){
         if(error.message?.includes('full')){
-          showToast('این چالش پر شده — یکی دیگه رو امتحان کن');
+          showToast(T('toast_challenge_full'));
           await loadTasks();
         } else {
-          showToast('خطا در شروع چالش');
+          showToast(T('toast_challenge_start_error'));
         }
         return;
       }
@@ -1165,21 +2207,21 @@
     if(action==='chek'){
       // for channel/group tasks, verify real membership before paying anything out
       if(!t.instantPay){
-        btn.textContent='در حال بررسی…';
+        btn.textContent=T('btn_checking');
         const { data:memData, error:memError } = await sb.functions.invoke('check-membership', {
           body:{ link: t.link, user_id: currentUser.id }
         });
         if(memError || !memData?.isMember){
           t.state='todo';
           renderTasks();
-          showToast('هنوز عضو نشدی — اول عضو کانال/گروه شو، بعد دوباره امتحان کن');
+          showToast(T('toast_not_member'));
           return;
         }
       }
 
       const { data, error } = await sb.rpc('claim_task', { p_order_id:id, p_user_id: currentUser.id });
       btn.disabled=false;
-      if(error){ showToast('خطا در دریافت پاداش'); return; }
+      if(error){ showToast(T('toast_reward_error')); return; }
 
       t.state=data.state; // 'done' (instant-pay) or 'pending' (waiting the duration)
       t.boostedTotal=data.reward_total;
@@ -1193,8 +2235,8 @@
       updateBalanceUI(true);
 
       showToast(t.instantPay
-        ? `◈ ${fmt(data.instant_paid)} کوین واریز شد ✓`
-        : `◈ ${fmt(data.instant_paid)} فوری واریز شد — بقیه بعد از ${t.dur} ساعت`);
+        ? T('toast_reward_instant',{amount:fmt(data.instant_paid)})
+        : T('toast_reward_partial',{amount:fmt(data.instant_paid), dur:t.dur}));
     }
   }
 
@@ -1234,7 +2276,7 @@
     barPending.style.width=Math.round(order.pending/order.qty*100)+'%';
     statCompleted.textContent=`${order.completed}/${order.qty}`;
     barCompleted.style.width=Math.round(order.completed/order.qty*100)+'%';
-    boostHint.textContent=`قیمت هر واحد این سفارش: ${fmt(order.unit)} کوین`;
+    boostHint.textContent=T('boost_hint_default',{price:fmt(order.unit)});
   }
 
   function openOrderModal(orderId){
@@ -1258,10 +2300,10 @@
       const discountAmount=Math.round(subtotal*discountPct/100);
       const cost=subtotal-discountAmount;
       boostHint.textContent = discountPct>0
-        ? `= +${fmt(extraUnits)} واحد — هزینه: ${fmt(cost)} کوین (${discountPct}% تخفیف اعمال شد)`
-        : `= +${fmt(extraUnits)} واحد (قیمت هر واحد: ${fmt(order.unit)} کوین)`;
+        ? T('boost_hint_calc_discount',{units:fmt(extraUnits), cost:fmt(cost), pct:discountPct})
+        : T('boost_hint_calc',{units:fmt(extraUnits), price:fmt(order.unit)});
     } else {
-      boostHint.textContent = `قیمت هر واحد این سفارش: ${fmt(order.unit)} کوین`;
+      boostHint.textContent = T('boost_hint_default',{price:fmt(order.unit)});
     }
   });
 
@@ -1270,7 +2312,7 @@
     if(!order) return;
     const amount=parseInt(boostInput.value)||0;
     const extraUnits=Math.floor(amount/order.unit);
-    if(extraUnits<=0){ showToast('یه مبلغ معتبر وارد کن'); return; }
+    if(extraUnits<=0){ showToast(T('boost_invalid_amount')); return; }
 
     applyBoost.disabled=true;
     const { data, error } = await sb.rpc('boost_order', {
@@ -1279,7 +2321,7 @@
     applyBoost.disabled=false;
 
     if(error){
-      showToast(error.message?.includes('insufficient') ? 'موجودی کافی نیست' : ('خطا: '+error.message));
+      showToast(error.message?.includes('insufficient') ? T('boost_insufficient') : T('boost_error',{msg:error.message}));
       return;
     }
     const addedQty = data.qty - order.qty;
@@ -1288,7 +2330,7 @@
     refreshOrderModal();
     renderMyLinks();
     boostInput.value='';
-    showToast(`◈ بودجه افزایش یافت: +${fmt(addedQty)} واحد`);
+    showToast(T('boost_success_toast',{units:fmt(addedQty)}));
   });
 
   const orderUsersModal=document.getElementById('orderUsersModal');
@@ -1297,27 +2339,27 @@
 
   showUsersBtn.addEventListener('click', async ()=>{
     if(userLevel!=='premium'){
-      showToast('این قابلیت نیاز به سطح پرمیوم داره 🔒');
+      showToast(T('order_users_locked_toast'));
       return;
     }
     const order=myOrders.find(o=>o.id===activeOrderId);
     if(!order || !currentUser?.id) return;
 
-    orderUsersList.innerHTML='<div class="empty-hint">در حال بارگذاری…</div>';
+    orderUsersList.innerHTML='<div class="empty-hint">'+T('order_users_loading')+'</div>';
     orderUsersModal.classList.add('show');
 
     const { data, error } = await sb.rpc('get_order_completions', {
       p_order_id: order.id, p_owner_id: currentUser.id
     });
-    if(error){ orderUsersList.innerHTML='<div class="empty-hint">خطا در گرفتن اطلاعات کاربران</div>'; return; }
+    if(error){ orderUsersList.innerHTML='<div class="empty-hint">'+T('order_users_error')+'</div>'; return; }
 
     if(!data || data.length===0){
-      orderUsersList.innerHTML='<div class="empty-hint">هنوز کسی این چالش رو شروع نکرده.</div>';
+      orderUsersList.innerHTML='<div class="empty-hint">'+T('order_users_empty')+'</div>';
       return;
     }
-    const stateLabel={ opened:'شروع‌شده', pending:'در حال بررسی', done:'تکمیل‌شده ✓' };
+    const stateLabel={ opened:T('state_opened'), pending:T('state_pending'), done:T('state_done') };
     orderUsersList.innerHTML = data.map(r=>{
-      const name = r.first_name || r.username || ('کاربر '+r.user_id);
+      const name = r.first_name || r.username || T('user_fallback',{id:r.user_id});
       return `<div class="perk-item"><span class="chk">👤</span>${name} — <span style="color:var(--cyan)">${stateLabel[r.state]||r.state}</span></div>`;
     }).join('');
   });
@@ -1330,14 +2372,14 @@
   const orderTitle=document.getElementById('orderTitle'), orderDesc=document.getElementById('orderDesc');
   const nameInputEl=document.getElementById('nameInput'), linkInputEl=document.getElementById('linkInput');
 
-  const typeCopy={
-    channel:{ title:'◈ ثبت سفارش کانال / گروه',
-      desc:'لینکت رو بذار و انتخاب کن کاربر چند ساعت باید بمونه تا سکه‌ی کامل بگیره. هرچی مدت بیشتر، اعتماد و کیفیت عضو بالاتر میره.',
-      nph:'مثلاً کانال بازار طلا', ph:'t.me/yourchannel', linkHint:'' },
-    bot:{ title:'◈ ثبت سفارش بات / مینی‌اپ',
-      desc:'لینک بات، مینی‌اپ یا حتی لینک رفرالت رو بذار. چون نمیشه فهمید کاربر چقدر داخل بات می‌مونه، سکه بلافاصله بعد از تایید واریز میشه.',
-      nph:'مثلاً ربات کوییز طلایی', ph:'t.me/yourbot', linkHint:'(می‌تونی لینک رفرال خودتو هم اینجا بذاری)' }
-  };
+  function getTypeCopy(){
+    return {
+      channel:{ title:T('order_title_channel'), desc:T('order_desc_channel'),
+        nph:T('name_placeholder_channel'), ph:T('link_placeholder_channel'), linkHint:T('link_hint_channel') },
+      bot:{ title:T('order_title_bot'), desc:T('order_desc_bot'),
+        nph:T('name_placeholder_bot'), ph:T('link_placeholder_bot'), linkHint:T('link_hint_bot') }
+    };
+  }
 
   let selectedType='channel';
   const BOT_MIN_PRICE=5000;
@@ -1354,6 +2396,7 @@
     document.getElementById(type==='channel'?'typeChannel':'typeBot').classList.add('selected');
     orderForm.style.display='block';
     videoComingSoon.style.display='none';
+    const typeCopy=getTypeCopy();
     orderTitle.textContent=typeCopy[type].title;
     orderDesc.textContent=typeCopy[type].desc;
     nameInputEl.placeholder=typeCopy[type].nph;
@@ -1365,7 +2408,7 @@
     if(type==='bot'){
       durationSection.style.display='none';
       priceInput.value=String(BOT_MIN_PRICE);
-      priceInput.placeholder='مثلاً '+fmt(BOT_MIN_PRICE);
+      priceInput.placeholder=T('unit_price_placeholder',{n:fmt(BOT_MIN_PRICE)});
     } else {
       durationSection.style.display='block';
       priceInput.value='';
@@ -1376,7 +2419,7 @@
 
   typeChannel.addEventListener('click',()=>selectType('channel'));
   typeBot.addEventListener('click',()=>selectType('bot'));
-  typeVideo.addEventListener('click',()=>{ selectType('video'); showToast('این بخش به‌زودی فعال میشه'); });
+  typeVideo.addEventListener('click',()=>{ selectType('video'); showToast(T('video_soon_toast')); });
 
   // ===== order/duration selector (advertiser side) =====
   const durOptionsContainer=document.getElementById('durOptions'), durHint=document.getElementById('durHint');
@@ -1389,12 +2432,14 @@
   const LEVEL_ORDER_DISCOUNT={simple:0, golden:5, premium:15}; // % off total order cost
   function levelAtLeast(req){ return LEVEL_RANK[userLevel]>=LEVEL_RANK[req]; }
 
-  const DUR_TIERS=[
-    {dur:3,  min:3500, label:'۳ ساعت', lock:null},
-    {dur:6,  min:4550, label:'۶ ساعت', lock:'golden'},
-    {dur:12, min:5600, label:'۱۲ ساعت', lock:null},
-    {dur:24, min:8050, label:'۲۴ ساعت', lock:null},
+  const DUR_TIERS_BASE=[
+    {dur:3,  min:3500, lock:null},
+    {dur:6,  min:4550, lock:'golden'},
+    {dur:12, min:5600, lock:null},
+    {dur:24, min:8050, lock:null},
   ];
+  function getDurTiers(){ return DUR_TIERS_BASE.map(t=>({...t, label:T('dur_hours_label',{n:t.dur})})); }
+  Object.defineProperty(window, 'DUR_TIERS', { get: getDurTiers });
 
   // interpolate/extrapolate a fair minimum price for any custom hour value (premium only)
   function computeMinForHours(h){
@@ -1414,8 +2459,8 @@
   let selectedMin=5600, selectedDur=12, selectedDurMode='preset';
 
   function refreshDurHint(){
-    durHint.textContent=`حداقل قیمت واحد برای ${selectedDur} ساعت: ${fmt(selectedMin)} کوین`;
-    priceInput.placeholder='مثلاً '+fmt(selectedMin);
+    durHint.textContent=T('dur_hint_min',{dur:selectedDur, price:fmt(selectedMin)});
+    priceInput.placeholder=T('unit_price_placeholder',{n:fmt(selectedMin)});
   }
 
   function renderDurOptions(){
@@ -1426,10 +2471,10 @@
       const el=document.createElement('div');
       el.className='dur-opt'+(isSelected?' selected':'')+(locked?' locked':'');
       el.innerHTML = locked
-        ? `<div class="h">🔒</div><div class="p">ارتقا به گلدن</div>`
+        ? `<div class="h">🔒</div><div class="p">${T('dur_locked_hint')}</div>`
         : `<div class="h">${tier.label}</div>`;
       el.addEventListener('click',()=>{
-        if(locked){ showToast('این بازه با ارتقا به سطح گلدن باز میشه 🔒'); return; }
+        if(locked){ showToast(T('dur_locked_toast')); return; }
         selectedDurMode='preset'; selectedMin=tier.min; selectedDur=tier.dur;
         customHourRow.style.display='none';
         refreshDurHint(); renderDurOptions(); refreshSummary();
@@ -1441,7 +2486,7 @@
       const isCustom = selectedDurMode==='custom';
       const el=document.createElement('div');
       el.className='dur-opt'+(isCustom?' selected':'');
-      el.innerHTML=`<div class="h">✦</div><div class="p">دلخواه</div>`;
+      el.innerHTML=`<div class="h">✦</div><div class="p">${T('dur_custom_label')}</div>`;
       el.addEventListener('click',()=>{
         selectedDurMode='custom';
         customHourRow.style.display='block';
@@ -1467,7 +2512,7 @@
     const subtotal=qty*unit;
     const discountPct=LEVEL_ORDER_DISCOUNT[userLevel];
     const discountAmount=Math.round(subtotal*discountPct/100);
-    sumDiscount.textContent = discountPct>0 ? `${discountPct}% (${fmt(discountAmount)}-)` : '۰';
+    sumDiscount.textContent = discountPct>0 ? `${discountPct}% (${fmt(discountAmount)}-)` : '0';
     const total=subtotal-discountAmount;
     sumTotal.textContent = (qty>0 && unit>0) ? fmt(total)+' coin' : '—';
   }
@@ -1500,7 +2545,7 @@
 
   function resetLinkVerification(){
     linkVerified=null;
-    submitOrderBtn.textContent='بررسی لینک';
+    submitOrderBtn.textContent=T('btn_check_link');
     submitOrderBtn.classList.remove('send-mode');
     linkCheckStatus.style.display='none';
   }
@@ -1508,38 +2553,38 @@
 
   submitOrderBtn.addEventListener('click', async ()=>{
     const link=linkInputEl.value.trim();
-    if(!link){ showToast('اول لینکش رو وارد کن'); return; }
+    if(!link){ showToast(T('toast_enter_link')); return; }
 
     const looksLikeBot=isBotUsername(extractTgUsername(link));
     if(selectedType==='channel' && looksLikeBot){
-      showToast('این لینک شبیه یه بات هست — برای بات از تب «بات/مینی‌اپ» استفاده کن');
+      showToast(T('toast_looks_like_bot'));
       return;
     }
     if(selectedType==='bot' && !looksLikeBot){
-      showToast('یوزرنیم بات‌های تلگرام همیشه به bot ختم می‌شه — لینک بات رو وارد کن');
+      showToast(T('toast_bot_username_must_end'));
       return;
     }
 
     // ----- stage 1: verify the link is a real, resolvable Telegram entity -----
     if(!linkVerified){
       submitOrderBtn.disabled=true;
-      submitOrderBtn.textContent='در حال بررسی…';
+      submitOrderBtn.textContent=T('btn_checking');
       const { data, error } = await sb.functions.invoke('check-link', { body:{ link } });
       submitOrderBtn.disabled=false;
 
       if(error || !data?.valid){
-        submitOrderBtn.textContent='بررسی لینک';
+        submitOrderBtn.textContent=T('btn_check_link');
         linkCheckStatus.style.display='block';
         linkCheckStatus.className='dur-hint bad';
-        linkCheckStatus.textContent='این لینک پیدا نشد — لینک عمومی و درست رو وارد کن (برای کانال/گروه خصوصی، بات باید عضوش باشه)';
+        linkCheckStatus.textContent=T('link_not_found');
         return;
       }
 
       linkVerified=data;
       linkCheckStatus.style.display='block';
       linkCheckStatus.className='dur-hint ok';
-      linkCheckStatus.textContent=`✓ لینک تأیید شد: ${data.title}`;
-      submitOrderBtn.textContent='ثبت سفارش';
+      linkCheckStatus.textContent=T('link_verified',{title:data.title});
+      submitOrderBtn.textContent=T('btn_submit_order');
       submitOrderBtn.classList.add('send-mode');
       return;
     }
@@ -1548,21 +2593,21 @@
     const qty=parseInt(qtyInput.value), unit=parseInt(priceInput.value);
     const name=nameInputEl.value.trim();
 
-    if(!currentUser?.id){ showToast('اول باید وارد بشی'); return; }
-    if(!name){ showToast('اول اسمش رو وارد کن'); return; }
-    if(!qty || qty<=0){ showToast('تعداد کاربر رو وارد کن'); return; }
-    if(!unit || unit<=0){ showToast('قیمت هر واحد رو وارد کن'); return; }
+    if(!currentUser?.id){ showToast(T('toast_login_required')); return; }
+    if(!name){ showToast(T('toast_enter_name')); return; }
+    if(!qty || qty<=0){ showToast(T('toast_enter_qty')); return; }
+    if(!unit || unit<=0){ showToast(T('toast_enter_unit_price')); return; }
     if(selectedType==='bot'){
-      if(unit<BOT_MIN_PRICE){ showToast(`حداقل قیمت واحد برای بات/مینی‌اپ، ${fmt(BOT_MIN_PRICE)} کوینه`); return; }
+      if(unit<BOT_MIN_PRICE){ showToast(T('toast_bot_min_price',{price:fmt(BOT_MIN_PRICE)})); return; }
     } else if(unit<selectedMin){
-      showToast(`حداقل قیمت واحد برای ${selectedDur} ساعت، ${fmt(selectedMin)} کوینه`);
+      showToast(T('toast_min_price_dur',{dur:selectedDur, price:fmt(selectedMin)}));
       return;
     }
     const subtotal=qty*unit;
     const orderDiscountPct=LEVEL_ORDER_DISCOUNT[userLevel];
     const orderDiscountAmount=Math.round(subtotal*orderDiscountPct/100);
     const total=subtotal-orderDiscountAmount;
-    if(total>balance){ showToast('موجودی برای این سفارش کافی نیست'); return; }
+    if(total>balance){ showToast(T('toast_insufficient_order')); return; }
 
     submitOrderBtn.disabled=true;
 
@@ -1579,7 +2624,7 @@
     submitOrderBtn.disabled=false;
 
     if(error){
-      showToast(error.message?.includes('insufficient') ? 'موجودی برای این سفارش کافی نیست' : ('خطا: '+error.message));
+      showToast(error.message?.includes('insufficient') ? T('toast_insufficient_order') : T('toast_generic_error',{msg:error.message}));
       return;
     }
 
@@ -1587,7 +2632,7 @@
     await loadMyOrders();
     // your own ads never show up in your own task list — that's expected
 
-    showToast(`سفارش برای ${fmt(qty)} کاربر ثبت شد ✓`);
+    showToast(T('toast_order_created',{qty:fmt(qty)}));
     nameInputEl.value=''; linkInputEl.value=''; qtyInput.value=''; priceInput.value='';
     resetLinkVerification();
     refreshSummary();
@@ -1616,7 +2661,7 @@
       let qty=Math.floor(budget/unit);
       qty=Math.max(1,Math.min(qty,300));
       const total=qty*unit;
-      return {dur:null, durLabel:'استارت لینک', unit, qty, total};
+      return {dur:null, durLabel:T('dur_start_link_label'), unit, qty, total};
     }
 
     const availableTiers=DUR_TIERS.filter(t=>!t.lock || levelAtLeast(t.lock));
@@ -1637,7 +2682,7 @@
 
   suggestBtn.addEventListener('click',()=>{
     lastSuggestion=computeSuggestion();
-    modalBalance.textContent=fmt(balance);
+    document.getElementById('suggestModalDesc').innerHTML=T('suggest_modal_desc',{balance:'<strong id="modalBalance">'+fmt(balance)+'</strong>'});
     sugQty.textContent=fmt(lastSuggestion.qty);
     sugDur.textContent=lastSuggestion.durLabel;
     sugUnit.textContent=fmt(lastSuggestion.unit)+' coin';
@@ -1667,7 +2712,7 @@
     refreshSummary();
 
     closeModal();
-    showToast('پیشنهاد روی فرم اعمال شد ✓');
+    showToast(T('suggest_applied_toast'));
   });
 
   // ===== wallet: connect (header) — real TonConnect =====
@@ -1711,7 +2756,7 @@
         : connectedAddress;
       connectWalletBtn.innerHTML = `<span class="cw-ic">👛</span>${shortAddr(friendly)}`;
       connectWalletBtn.classList.add('connected');
-      showToast('کیف‌پول متصل شد ✓');
+      showToast(T('toast_wallet_connected'));
       refreshRealTonBalance(friendly);
     } else {
       walletConnected = false;
@@ -1766,7 +2811,7 @@
   function resetTransferForm(){
     recipientInput.value=''; amountInput.value='';
     recipientVerified=null;
-    checkUserBtn.textContent='Chek User';
+    checkUserBtn.textContent=T('btn_check_user');
     checkUserBtn.classList.remove('send-mode');
     quickPctBtns.forEach(b=>b.classList.remove('active'));
     refreshTransferSummary();
@@ -1778,25 +2823,25 @@
     adDiscountRow.style.display='flex';
     const base=BASE_FEE_PCT[userLevel], discounted=AD_DISCOUNT_FEE_PCT[userLevel];
     if(adWatchedToday){
-      adDiscountText.textContent=`تخفیف امروز فعاله — کارمزدت ${discounted}٪ شد ✓`;
-      adWatchBtn.disabled=true; adWatchBtn.classList.add('watched'); adWatchBtn.textContent='دیده شد ✓';
+      adDiscountText.textContent=T('ad_discount_active',{pct:discounted});
+      adWatchBtn.disabled=true; adWatchBtn.classList.add('watched'); adWatchBtn.textContent=T('ad_watch_btn_watched');
     } else {
-      adDiscountText.textContent=`کارمزدت الان ${base}٪ه — با دیدن یه تبلیغ می‌شه ${discounted}٪`;
-      adWatchBtn.disabled=false; adWatchBtn.classList.remove('watched'); adWatchBtn.textContent='🎬 تماشا';
+      adDiscountText.textContent=T('ad_discount_inactive',{base:base, discounted:discounted});
+      adWatchBtn.disabled=false; adWatchBtn.classList.remove('watched'); adWatchBtn.textContent=T('ad_watch_btn_default');
     }
   }
 
   adWatchBtn.addEventListener('click', async ()=>{
     // TODO: this still only simulates watching an ad (no real rewarded-ad SDK like
     // Adsgram wired up yet) — but "watched" now really persists via mark_ad_watched.
-    adWatchBtn.disabled=true; adWatchBtn.textContent='در حال پخش…';
+    adWatchBtn.disabled=true; adWatchBtn.textContent=T('ad_watch_btn_playing');
     setTimeout(async ()=>{
       const { error } = await sb.rpc('mark_ad_watched', { p_user_id: currentUser.id });
-      if(error){ adWatchBtn.disabled=false; adWatchBtn.textContent='🎬 تماشا'; showToast('خطا — دوباره امتحان کن'); return; }
+      if(error){ adWatchBtn.disabled=false; adWatchBtn.textContent=T('ad_watch_btn_default'); showToast(T('toast_ad_error')); return; }
       adWatchedToday=true;
       refreshAdDiscountRow();
       refreshTransferSummary();
-      showToast('تبلیغ دیده شد — کارمزد کاهش یافت ✓');
+      showToast(T('toast_ad_watched'));
     },1400);
   });
 
@@ -1842,38 +2887,38 @@
     }
     const query=recipientInput.value.trim().replace('@','');
     const amount=parseInt(amountInput.value)||0;
-    if(!query){ showToast('آیدی گیرنده رو وارد کن'); return; }
-    if(!amount||amount<=0){ showToast('مبلغ رو وارد کن'); return; }
-    if(amount>balance){ showToast('موجودی کافی نیست'); return; }
+    if(!query){ showToast(T('toast_enter_recipient')); return; }
+    if(!amount||amount<=0){ showToast(T('toast_enter_amount')); return; }
+    if(amount>balance){ showToast(T('toast_insufficient')); return; }
 
-    checkUserBtn.textContent='در حال بررسی…'; checkUserBtn.disabled=true;
+    checkUserBtn.textContent=T('btn_checking'); checkUserBtn.disabled=true;
     const { data, error } = await sb.rpc('find_recipient', { p_query: query });
     checkUserBtn.disabled=false;
 
     const found = Array.isArray(data) ? data[0] : data;
     if(error || !found){
-      checkUserBtn.textContent='Chek User';
-      showToast('کاربری با این آیدی پیدا نشد');
+      checkUserBtn.textContent=T('btn_check_user');
+      showToast(T('toast_user_not_found'));
       return;
     }
     if(found.id === currentUser.id){
-      checkUserBtn.textContent='Chek User';
-      showToast('نمی‌تونی به خودت انتقال بدی');
+      checkUserBtn.textContent=T('btn_check_user');
+      showToast(T('toast_cant_self_transfer'));
       return;
     }
 
-    const name = found.first_name || found.username || ('کاربر '+found.id);
+    const name = found.first_name || found.username || T('user_fallback',{id:found.id});
     recipientVerified={id: found.id, name};
     tSumUser.textContent=name;
-    checkUserBtn.textContent='Send';
+    checkUserBtn.textContent=T('btn_send');
     checkUserBtn.classList.add('send-mode');
     refreshTransferSummary();
-    showToast('کاربر پیدا شد ✓');
+    showToast(T('toast_user_found'));
   });
 
   async function executeTransfer(){
     const amount=parseInt(amountInput.value)||0;
-    if(amount>balance){ showToast('موجودی کافی نیست'); return; }
+    if(amount>balance){ showToast(T('toast_insufficient')); return; }
 
     checkUserBtn.disabled=true;
     const { data, error } = await sb.rpc('transfer_coins', {
@@ -1886,9 +2931,9 @@
     if(error){
       const msg = error.message||'';
       showToast(
-        msg.includes('insufficient') ? 'موجودی کافی نیست' :
-        msg.includes('daily transfer limit') ? 'به سقف روزانه‌ی انتقال رسیدی' :
-        'خطا: '+msg
+        msg.includes('insufficient') ? T('toast_insufficient') :
+        msg.includes('daily transfer limit') ? T('toast_daily_limit') :
+        T('toast_generic_error',{msg:msg})
       );
       return;
     }
@@ -1923,7 +2968,7 @@
 
     setTimeout(()=>{
       transferModal.classList.remove('show');
-      showToast(`◈ ${fmt(data.final_amount)} کوین برای ${recipientVerified.name} ارسال شد ✓`);
+      showToast(T('toast_transfer_success',{amount:fmt(data.final_amount), name:recipientVerified.name}));
     },500);
   }
 
@@ -1942,7 +2987,7 @@
     transferHistory.forEach(r=>{
       const el=document.createElement('div');
       el.className='history-row';
-      el.innerHTML=`<span class="hu">کاربر: <strong>${r.user}</strong></span><span class="ha">${fmt(r.finalAmount)} coin</span>`;
+      el.innerHTML=`<span class="hu">${T('history_user_label')} <strong>${r.user}</strong></span><span class="ha">${fmt(r.finalAmount)} coin</span>`;
       el.addEventListener('click',()=>openHistoryDetail(r));
       historyList.appendChild(el);
     });
@@ -1963,7 +3008,7 @@
 
   function openHistoryDetail(r){
     const d=new Date(r.date);
-    detDate.textContent=d.toLocaleString('fa-IR');
+    detDate.textContent=d.toLocaleString(LOCALE_MAP[currentLang]);
     detFee.textContent=`${r.feePct}% (${fmt(r.feeAmount)} coin)`;
     detAmount.textContent=fmt(r.amount)+' coin';
     detFinal.textContent=fmt(r.finalAmount)+' coin';
@@ -1972,7 +3017,7 @@
   }
   detId.addEventListener('click',()=>{
     navigator.clipboard?.writeText(detId.textContent).catch(()=>{});
-    showToast('آیدی کپی شد');
+    showToast(T('toast_id_copied'));
   });
   historyDetailClose.addEventListener('click',()=>historyDetailModal.classList.remove('show'));
   historyDetailModal.addEventListener('click',(e)=>{ if(e.target===historyDetailModal) historyDetailModal.classList.remove('show'); });
@@ -2002,60 +3047,37 @@
   const levelModal=document.getElementById('levelModal'), levelModalClose=document.getElementById('levelModalClose');
   const levelYouLabel=document.getElementById('levelYouLabel');
   const tierRows={simple:document.getElementById('tierSimple'), golden:document.getElementById('tierGolden'), premium:document.getElementById('tierPremium')};
-  const levelLabels={simple:'ساده', golden:'گلدن', premium:'پرمیوم'};
+  function getLevelLabels(){ return {simple:T('level_simple_name'), golden:T('level_golden_name'), premium:T('level_premium_name')}; }
 
   levelIcon.addEventListener('click',()=>{
     Object.values(tierRows).forEach(r=>r.classList.remove('current'));
     tierRows[userLevel].classList.add('current');
-    levelYouLabel.textContent=levelLabels[userLevel];
+    levelYouLabel.textContent=getLevelLabels()[userLevel];
     levelModal.classList.add('show');
   });
   levelModalClose.addEventListener('click',()=>levelModal.classList.remove('show'));
   levelModal.addEventListener('click',(e)=>{ if(e.target===levelModal) levelModal.classList.remove('show'); });
 
   // ===== level detail modal (the "show more" view) =====
-  const PERKS_DATA={
-    simple:{
-      icon:'◈', title:'سطح ساده', cls:'',
-      perks:[
-        'دسترسی کامل به همه‌ی چالش‌های روزانه',
-        'ثبت سفارش تبلیغ در کانال/گروه و بات',
-        'بازه‌های زمانی ۳، ۱۲ و ۲۴ ساعته برای سفارش',
-        'کارمزد انتقال موجودی: ۵٪ (با دیدن یک تبلیغ: ۳٪)',
-        'سقف انتقال موجودی: ۱ بار در روز',
-        'کارمزد ثبت سفارش تبلیغ: همیشه ۰ (رایگان)',
-      ],
-      footer:'none'
-    },
-    golden:{
-      icon:'🥇', title:'سطح گلدن', cls:'gold',
-      perks:[
-        '+۵٪ سکه‌ی اضافه روی هر چالش تکمیل‌شده',
-        'باز شدن بازه‌ی زمانی ۶ ساعته برای سفارش‌ها',
-        '۵٪ تخفیف روی قیمت ثبت سفارش تبلیغ',
-        'اولویت نمایش سفارش‌های خودت در صف چالش‌ها',
-        'بج طلایی 🥇 کنار نامت',
-        'کارمزد انتقال موجودی: ۳٪ (با دیدن یک تبلیغ: ۱٪)',
-        'سقف انتقال موجودی: ۳ بار در روز',
-      ],
-      footer:'invite'
-    },
-    premium:{
-      icon:'💎', title:'سطح پرمیوم', cls:'violet',
-      perks:[
-        '+۱۲٪ سکه‌ی اضافه روی هر چالش تکمیل‌شده',
-        'انتخاب هر مدت دلخواه بین ۱ تا ۷۲ ساعت برای سفارش',
-        '۱۵٪ تخفیف روی قیمت ثبت سفارش تبلیغ',
-        'نمایش کاربران واقعی هر سفارش',
-        'بدون محدودیت تعداد سفارش هم‌زمان',
-        'کارمزد انتقال موجودی: همیشه ۰٪',
-        'انتقال موجودی: بدون هیچ محدودیت روزانه',
-        'بج الماسی 💎 کنار نامت',
-        'تیک بنفش ✓ کنار اسم کانال/بات‌هایی که ثبت می‌کنی',
-      ],
-      footer:'buy'
-    }
-  };
+  function getPerksData(){
+    return {
+      simple:{
+        icon:'◈', title:T('level_simple_name'), cls:'',
+        perks:[0,1,2,3,4,5].map(i=>T('perks_simple_'+i)),
+        footer:'none'
+      },
+      golden:{
+        icon:'🥇', title:T('level_golden_name'), cls:'gold',
+        perks:[0,1,2,3,4,5,6].map(i=>T('perks_golden_'+i)),
+        footer:'invite'
+      },
+      premium:{
+        icon:'💎', title:T('level_premium_name'), cls:'violet',
+        perks:[0,1,2,3,4,5,6,7,8].map(i=>T('perks_premium_'+i)),
+        footer:'buy'
+      }
+    };
+  }
 
   const levelDetailModal=document.getElementById('levelDetailModal'), levelDetailClose=document.getElementById('levelDetailClose');
   const detailTitle=document.getElementById('detailTitle'), detailIconBig=document.getElementById('detailIconBig');
@@ -2063,10 +3085,10 @@
 
   function renderLevelFooter(type){
     if(type==='invite'){
-      levelFooter.innerHTML=`<button class="invite-btn" id="inviteBtn">دعوت ${referralCount}/${GOLDEN_REQ} دوست</button>`;
+      levelFooter.innerHTML=`<button class="invite-btn" id="inviteBtn">${T('invite_btn',{count:referralCount, req:GOLDEN_REQ})}</button>`;
       document.getElementById('inviteBtn').addEventListener('click',doInvite);
     } else if(type==='buy'){
-      levelFooter.innerHTML=`<button class="goto-store-btn" id="gotoStoreBtn">🛍 مشاهده و خرید در فروشگاه</button>`;
+      levelFooter.innerHTML=`<button class="goto-store-btn" id="gotoStoreBtn">${T('goto_store_btn')}</button>`;
       document.getElementById('gotoStoreBtn').addEventListener('click',()=>{
         levelDetailModal.classList.remove('show');
         levelModal.classList.remove('show');
@@ -2078,7 +3100,7 @@
   }
 
   function openLevelDetail(level){
-    const data=PERKS_DATA[level];
+    const data=getPerksData()[level];
     detailTitle.textContent=data.icon+' '+data.title;
     detailIconBig.textContent=data.icon;
     detailIconBig.className='detail-icon-big '+data.cls;
@@ -2115,64 +3137,67 @@
   function usdToTonLabel(usd){ return (Math.round((usd/PRICING.TON_USD_RATE)*100)/100)+' TON'; }
   function usdToStarsLabel(usd){ return Math.round(usd*PRICING.STARS_PER_USD)+' ⭐'; }
 
-  const STORE_PACKAGES=[
-    { id:'starter', icon:'🔰', title:'استارتر پک',
-      sub:'۱۰۰,۰۰۰ سکه + <span class="name-tick blue">✓</span> تیک آبی کنار اسم لینک‌هات',
-      usd:0.19, coins:100000, badge:'blue' },
-    { id:'premium', icon:'💎', title:'حساب پرمیوم + <span class="name-tick purple">✓</span>',
-      sub:'فعال‌سازی سطح پرمیوم + تیک بنفش کنار اسم لینک‌هات',
-      usd:3.49, coins:0, premium:true, badge:'purple' },
-    { id:'premium_500k', icon:'💎🪙', title:'پرمیوم + ۵۰۰K سکه + <span class="name-tick purple">✓</span>',
-      sub:'فعال‌سازی پرمیوم + ۵۰۰,۰۰۰ کوین هدیه + تیک بنفش کنار اسم لینک‌هات',
-      usd:3.99, compareUsd:4.32, ribbon:'بهترین ارزش', coins:500000, premium:true, badge:'purple' },
-    { id:'coins_900k', icon:'🪙', title:'۹۰۰,۰۰۰ سکه',
-      sub:'شارژ مستقیم موجودی',
-      usd:1.49, coins:900000 },
-  ];
+  function getStorePackages(){
+    return [
+      { id:'starter', icon:'🔰', title:T('pkg_starter_title'),
+        sub:T('pkg_starter_sub')+' <span class="name-tick blue">✓</span>',
+        usd:0.19, coins:100000, badge:'blue' },
+      { id:'premium', icon:'💎', title:T('pkg_premium_title')+' <span class="name-tick purple">✓</span>',
+        sub:T('pkg_premium_sub'),
+        usd:3.49, coins:0, premium:true, badge:'purple' },
+      { id:'premium_500k', icon:'💎🪙', title:T('pkg_premium500k_title')+' <span class="name-tick purple">✓</span>',
+        sub:T('pkg_premium500k_sub'),
+        usd:3.99, compareUsd:4.32, ribbon:T('pkg_premium500k_ribbon'), coins:500000, premium:true, badge:'purple' },
+      { id:'coins_900k', icon:'🪙', title:T('pkg_coins900k_title'),
+        sub:T('pkg_coins900k_sub'),
+        usd:1.49, coins:900000 },
+    ];
+  }
 
   // ===== خرید با Telegram Stars — فاکتور واقعی از بات می‌گیریم و با UI خودِ تلگرام باز می‌کنیم.
   // شارژ سکه/پرمیوم توسط bot-webhook (بعد از دریافت successful_payment از تلگرام) انجام میشه،
   // نه اینجا — پس بعد از پرداخت موفق فقط پروفایل رو دوباره می‌خونیم.
   async function buyWithStars(pkg, btn){
-    showToast('در حال ساخت فاکتور…');
+    showToast(T('toast_creating_invoice'));
     const { data, error } = await sb.functions.invoke('create-stars-invoice', {
       body: { user_id: currentUser.id, package_id: pkg.id }
     });
     if(error || !data?.invoice_url){
       btn.disabled=false;
-      showToast('خطا در ساخت فاکتور — دوباره امتحان کن');
+      showToast(T('toast_invoice_error'));
       return;
     }
 
     if(!tg?.openInvoice){
       btn.disabled=false;
-      showToast('این قابلیت فقط داخل تلگرام کار می‌کنه');
+      showToast(T('toast_telegram_only'));
       return;
     }
 
     tg.openInvoice(data.invoice_url, async (status)=>{
       if(status==='paid'){
-        showToast('در حال تأیید پرداخت…');
+        showToast(T('toast_confirming_payment'));
         // یه لحظه صبر می‌کنیم تا bot-webhook فرصت پردازش successful_payment رو داشته باشه
         await new Promise(r=>setTimeout(r,2000));
         await loginWithTelegram(); // پروفایل (موجودی، سطح، تیک‌ها) رو کامل تازه می‌کنه
         btn.disabled=false;
-        showToast('◈ خرید با موفقیت انجام شد ✓');
+        showToast(T('toast_purchase_success'));
       } else if(status==='cancelled'){
         btn.disabled=false;
-        showToast('پرداخت لغو شد');
+        showToast(T('toast_payment_cancelled'));
       } else if(status==='failed'){
         btn.disabled=false;
-        showToast('پرداخت ناموفق بود');
+        showToast(T('toast_payment_failed'));
       } else {
         btn.disabled=false;
-        showToast('وضعیت پرداخت نامشخصه — موجودیت رو چک کن');
+        showToast(T('toast_payment_unknown'));
       }
     });
   }
 
   function renderStorePackages(){
     const container=document.getElementById('storePackagesContainer');
+    const STORE_PACKAGES = getStorePackages();
     container.innerHTML = STORE_PACKAGES.map(pkg=>`
       <div class="store-card${pkg.ribbon?' highlighted':''}" id="storeCard-${pkg.id}">
         ${pkg.ribbon ? `<div class="sc-ribbon">${pkg.ribbon}</div>` : ''}
@@ -2193,7 +3218,7 @@
 
     container.querySelectorAll('.store-buy-btn[data-pkg]').forEach(btn=>{
       btn.addEventListener('click', ()=>{
-        if(!currentUser?.id){ showToast('اول باید وارد بشی'); return; }
+        if(!currentUser?.id){ showToast(T('toast_login_required')); return; }
         const pkg=STORE_PACKAGES.find(p=>p.id===btn.dataset.pkg), method=btn.dataset.method;
         btn.disabled=true;
 
@@ -2206,19 +3231,19 @@
 
         (async ()=>{
           let verifiedBoc = null;
-          showToast('در حال اتصال به کیف‌پول TON…');
+          showToast(T('toast_connecting_ton'));
           try{
             const txResult = await sendTonPayment(paidAmount);
             verifiedBoc = txResult.boc;
           } catch(e){
             btn.disabled=false;
-            showToast('پرداخت لغو شد یا انجام نشد');
+            showToast(T('toast_ton_cancelled'));
             return;
           }
 
           // به‌جای صدا زدن مستقیم purchase_package، تراکنش رو می‌فرستیم سمت سرور تا
           // خودش روی بلاکچین تأیید کنه و فقط بعد از تأیید واقعی سکه/پرمیوم بده.
-          showToast('در حال تأیید تراکنش روی بلاکچین…');
+          showToast(T('toast_confirming_chain'));
           const res = await sb.functions.invoke('verify-ton-payment', {
             body: { user_id: currentUser.id, package_id: pkg.id, boc: verifiedBoc }
           });
@@ -2234,7 +3259,7 @@
           }
 
           btn.disabled=false;
-          if(error){ showToast('خطا: '+error.message); return; }
+          if(error){ showToast(T('toast_generic_error',{msg:error.message})); return; }
 
           userLevel = data.level;
           hasBlueTick = data.has_blue_tick;
@@ -2244,7 +3269,7 @@
           updateBalanceUI(true);
           await loadTasks();
           renderMyLinks();
-          showToast('◈ خرید با موفقیت انجام شد ✓');
+          showToast(T('toast_purchase_success'));
         })();
       });
     });
@@ -2260,11 +3285,13 @@
     premium: [9000,10000,11000,12000,13000],
   };
   const SPIN_TIER_ORDER=['simple','golden','premium'];
-  const SPIN_TIER_META={
-    simple:{ icon:'◈', name:'ساده' },
-    golden:{ icon:'🥇', name:'گلدن' },
-    premium:{ icon:'💎', name:'پرمیوم' },
-  };
+  function getSpinTierMeta(){
+    return {
+      simple:{ icon:'◈', name:T('spin_tier_simple') },
+      golden:{ icon:'🥇', name:T('spin_tier_golden') },
+      premium:{ icon:'💎', name:T('spin_tier_premium') },
+    };
+  }
   let dailySpinClaimedToday=false; // demo flag — reset this daily server-side in production
 
   function fmtK(n){ return n<1000 ? fmt(n) : (n/1000)+'K'; }
@@ -2320,6 +3347,7 @@
   function renderSpinModal(){
     const spinTierList=document.getElementById('spinTierList');
     spinTierList.innerHTML='';
+    const SPIN_TIER_META=getSpinTierMeta();
     SPIN_TIER_ORDER.forEach(level=>{
       const pool=SPIN_POOLS[level], meta=SPIN_TIER_META[level];
       const isCurrent = level===userLevel;
@@ -2329,13 +3357,13 @@
       let claimHtml='';
       if(isCurrent){
         claimHtml = dailySpinClaimedToday
-          ? `<button class="spin-claim-btn" disabled>امروز گرفتی ✓</button>`
-          : `<button class="spin-claim-btn" id="spinClaimBtn">Claim</button>`;
+          ? `<button class="spin-claim-btn" disabled>${T('spin_claimed_today')}</button>`
+          : `<button class="spin-claim-btn" id="spinClaimBtn">${T('spin_claim_btn')}</button>`;
       }
       row.innerHTML=`
         <div class="spin-tier-head">
           <span class="spin-tier-name">${meta.icon} ${meta.name}</span>
-          <span class="spin-tier-sub">روزانه گردونه رایگان</span>
+          <span class="spin-tier-sub">${T('spin_tier_sub_daily')}</span>
         </div>
         <div class="spin-nums" id="spinNums-${level}">${numsHtml}</div>
         ${claimHtml}`;
@@ -2346,15 +3374,15 @@
     if(claimBtn){
       claimBtn.addEventListener('click', async ()=>{
         if(dailySpinClaimedToday) return;
-        if(!currentUser?.id){ showToast('اول باید وارد بشی'); return; }
+        if(!currentUser?.id){ showToast(T('toast_login_required')); return; }
         claimBtn.disabled=true;
-        claimBtn.textContent='در حال چرخش…';
+        claimBtn.textContent=T('spin_claiming');
 
         const { data, error } = await sb.rpc('claim_daily_spin', { p_user_id: currentUser.id });
         if(error){
           claimBtn.disabled=false;
-          claimBtn.textContent='Claim';
-          showToast(error.message?.includes('duplicate') ? 'امروز قبلاً گرفتی ✓' : 'خطا در دریافت جایزه');
+          claimBtn.textContent=T('spin_claim_btn');
+          showToast(error.message?.includes('duplicate') ? T('spin_already_claimed') : T('spin_error'));
           if(error.message?.includes('duplicate')){ dailySpinClaimedToday=true; refreshSpinDot(); }
           return;
         }
@@ -2369,8 +3397,8 @@
           balance+=amount;
           updateBalanceUI(true);
           flyGoldCoins(finalEl);
-          claimBtn.textContent=`+${fmt(amount)} گرفتی ✓`;
-          showToast(`◈ ${fmt(amount)} کوین رایگان گرفتی ✓`);
+          claimBtn.textContent=T('spin_won_btn',{amount:fmt(amount)});
+          showToast(T('spin_won_toast',{amount:fmt(amount)}));
         });
       });
     }
